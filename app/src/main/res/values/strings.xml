@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">roman-app</string>
+    <string name="enter_your_mesage">Enter your mesage</string>
+    <string name="send">Send</string>
 </resources>
