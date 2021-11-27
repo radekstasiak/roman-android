@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "458072121915",
+    "project_id": "roman-app-49f6c",
+    "storage_bucket": "roman-app-49f6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458072121915:android:0e15d56594abca8686b21e",
+        "android_client_info": {
+          "package_name": "io.radev.roman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458072121915-o1amaqvjatsj2jvm4fqgbbgt3air9mem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyi5A3Lo9NZkEedb4Zewy4YbhQI-Zuubs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458072121915-o1amaqvjatsj2jvm4fqgbbgt3air9mem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

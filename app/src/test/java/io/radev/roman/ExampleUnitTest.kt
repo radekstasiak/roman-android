@@ -1,5 +1,6 @@
 package io.radev.roman
 
+import org.apache.commons.csv.CSVParser
 import org.junit.Test
 
 import org.junit.Assert.*

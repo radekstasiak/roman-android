@@ -7,10 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import io.radev.roman.databinding.ActivityMainBinding
+import stasiak.radoslaw.munro.MunroDataParser
+import stasiak.radoslaw.munro.MunroDataQuery
+import stasiak.radoslaw.munro.MunroDataQuerySortingRules
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     val CHANNEL_DESCRIPTION = "romanNotificationChannelDesc"
     val NOTIFICATION_ID = 100
     lateinit var binding: ActivityMainBinding
+    lateinit var parser: MunroDataParser
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -38,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent("android.intent.action.MAIN").apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT,binding.messageTv.text.toString())
+            putExtra(Intent.EXTRA_TEXT, binding.messageTv.text.toString())
             putExtra("jid", "$smsNumber@s.whatsapp.net")
             setPackage("com.whatsapp")
         }
