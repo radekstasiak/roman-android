@@ -126,13 +126,16 @@ fun CardContent(title: String) {
                 style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold)
 
             )
-            IconButton(onClick = { expanded = !expanded }) {
+            IconButton(
+                onClick = { expanded = !expanded },
+                modifier = Modifier
+                    .padding(end = 16.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Outlined.Help,
                     contentDescription = "",
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                )
+
+                    )
             }
         }
 
