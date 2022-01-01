@@ -3,12 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/compose-model-1638051243966.xml" value="0.33" />
+        <entry key="../../../../../layout/compose-model-1638052187391.xml" value="0.5" />
+        <entry key="../../../../../layout/compose-model-1638053811583.xml" value="0.33" />
+        <entry key="../../../../../layout/compose-model-1639310054043.xml" value="0.2719594594594595" />
+        <entry key="../../../../../layout/compose-model-1639310629643.xml" value="0.165" />
+        <entry key="../../../../../layout/compose-model-1639311099943.xml" value="0.3365954803554007" />
+        <entry key="../../../../../layout/compose-model-1639494982170.xml" value="0.375" />
+        <entry key="../../../../../layout/compose-model-1639512585780.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1639514022177.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1639560508655.xml" value="0.19960707269155206" />
+        <entry key="../../../../../layout/compose-model-1639579808556.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1639680084276.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1639680205983.xml" value="0.25" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.43796296296296294" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3401268115942029" />
+        <entry key="app/src/main/res/layout/activity_main2.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
