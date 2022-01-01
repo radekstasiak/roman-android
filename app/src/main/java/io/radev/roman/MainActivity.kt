@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import io.radev.roman.databinding.ActivityMainBinding
-import stasiak.radoslaw.munro.MunroDataParser
-import stasiak.radoslaw.munro.MunroDataQuery
-import stasiak.radoslaw.munro.MunroDataQuerySortingRules
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     val CHANNEL_DESCRIPTION = "romanNotificationChannelDesc"
     val NOTIFICATION_ID = 100
     lateinit var binding: ActivityMainBinding
-    lateinit var parser: MunroDataParser
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
