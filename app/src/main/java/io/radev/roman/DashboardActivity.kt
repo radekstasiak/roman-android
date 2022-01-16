@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,34 +65,64 @@ fun RomanApp() {
 
 @Composable
 fun RomanMenuDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState) {
-//    for (i in 0 until 5) {
-//        Text(text = "Item $i")
-//    }
-
-    //TODO fix the drawer width
-    //check why it wont work with just drawer state without scaffold state
-    ModalDrawer(
-        drawerState = scaffoldState.drawerState,
-        drawerContent = {
-            Button(
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
-                onClick = { scope.launch { scaffoldState.drawerState.close() } },
-                content = { Text("Close Drawer") }
+    //TODO replace with Constraint layout
+    //TODO figure out how to position text to start inside a button
+    Column(
+        modifier = Modifier
+            .padding(
+                start = 16.dp,
+                top = 16.dp
             )
-        },
-        content = {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        for (i in 0 until 5) {
+            TextButton(
+                modifier = Modifier
+                    .padding(top = 16.dp),
+                onClick = {}
             ) {
-                Text(text = if (scaffoldState.drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
-                Spacer(Modifier.height(20.dp))
-                Button(onClick = { scope.launch { scaffoldState.drawerState.open() } }) {
-                    Text("Click to open")
-                }
+                Text(text = "Item $i")
             }
         }
-    )
+        Button(
+            modifier = Modifier
+                .padding(top = 16.dp),
+            onClick = { scope.launch { scaffoldState.drawerState.close() } },
+            content = { Text("Close Drawer") }
+        )
+        Text(
+            modifier = Modifier
+                .padding(top = 16.dp),
+            text = "<<< Swipe to close <<<",
+            color = LocalContentColor.current.copy(alpha = 0.3f)
+        )
+
+    }
+
+
+//    //TODO fix the drawer width
+//    //check why it wont work with just drawer state without scaffold state
+//    ModalDrawer(
+//        drawerState = scaffoldState.drawerState,
+//        drawerContent = {
+//            Button(
+//                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
+//                onClick = { scope.launch { scaffoldState.drawerState.close() } },
+//                content = { Text("Close Drawer") }
+//            )
+//        },
+//        content = {
+//            Column(
+//                modifier = Modifier.fillMaxSize().padding(16.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Text(text = if (scaffoldState.drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
+//                Spacer(Modifier.height(20.dp))
+//                Button(onClick = { scope.launch { scaffoldState.drawerState.open() } }) {
+//                    Text("Click to open")
+//                }
+//            }
+//        }
+//    )
 }
 
 @Composable
