@@ -23,10 +23,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.radev.roman.ui.theme.RomanappTheme
 
 class DashboardActivity : ComponentActivity() {
@@ -46,11 +49,51 @@ class DashboardActivity : ComponentActivity() {
 
 @Composable
 fun RomanApp() {
+    Scaffold(topBar = { RomanTopBar() },
+        bottomBar = { RomanBottomNavigation() }) { innerPaddings ->
+        DashboardBodyContent(modifier = Modifier.padding(innerPaddings))
+    }
+
+}
+
+@Composable
+fun RomanTopBar() {
+    TopAppBar(
+        title = { Text(text = stringResource(id = R.string.app_name)) }
+    )
+
+}
+
+@Composable
+fun RomanBottomNavigation() {
+    var selected by rememberSaveable {
+        mutableStateOf("")
+    }
+    val navigationItems = listOf<NavigationItem>(
+        NavigationItem(title = "Dashboard", icon = Icons.Filled.Menu),
+        NavigationItem(title = "Bookmarks", icon = Icons.Filled.Bookmark),
+        NavigationItem(title = "Settings", icon = Icons.Filled.Settings)
+    )
+    BottomNavigation() {
+        navigationItems.forEachIndexed { _, navigationItem ->
+            BottomNavigationItem(
+                icon = { Icon(imageVector = navigationItem.icon, contentDescription = "") },
+                selected = navigationItem.title == selected,
+                label = { Text(text = navigationItem.title) },
+                onClick = { selected = navigationItem.title }
+            )
+        }
+    }
+
+
+}
+
+@Composable
+fun DashboardBodyContent(modifier: Modifier = Modifier) {
     Surface(color = MaterialTheme.colors.background) {
         Column(
-//            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(vertical = 8.dp, horizontal = 8.dp)
@@ -61,10 +104,11 @@ fun RomanApp() {
     }
 }
 
+
 @Composable
-fun DashboardMenuItems() {
+fun DashboardMenuItems(modifier: Modifier = Modifier) {
     val itemList = arrayListOf("Travel", "Day", "Set reminder")
-    LazyColumn() {
+    LazyColumn(modifier = modifier) {
         items(itemList) { item ->
             Card(
                 backgroundColor = MaterialTheme.colors.primary,
@@ -150,11 +194,25 @@ fun CardContent(title: String) {
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.body2.copy(fontSize = 22.sp)
         )
-        //todo check how to add spring animation for the layout click
     }
 
 }
 
+@Preview(showBackground = true)
+@Composable
+fun RomanTopBarPreview() {
+    RomanappTheme {
+        RomanTopBar()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RomanBottomBarPreview() {
+    RomanappTheme {
+        RomanBottomNavigation()
+    }
+}
 
 @Preview(
     showBackground = true,
@@ -178,6 +236,12 @@ fun DefaultPreview() {
         RomanApp()
     }
 }
+
+data class NavigationItem(
+    val title: String,
+    val icon: ImageVector
+)
+
 
 
 
