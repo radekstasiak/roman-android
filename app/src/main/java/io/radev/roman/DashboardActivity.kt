@@ -16,13 +16,11 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Help
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import io.radev.roman.ui.theme.RomanappTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class DashboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,13 @@ class DashboardActivity : ComponentActivity() {
 
 @Composable
 fun RomanApp() {
-    Scaffold(topBar = { RomanTopBar() },
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = { RomanTopBar(scope = scope, scaffoldState = scaffoldState) },
+        drawerContent = { RomanMenuDrawer(scope = scope, scaffoldState = scaffoldState) },
         bottomBar = { RomanBottomNavigation() }) { innerPaddings ->
         DashboardBodyContent(modifier = Modifier.padding(innerPaddings))
     }
@@ -57,9 +63,50 @@ fun RomanApp() {
 }
 
 @Composable
-fun RomanTopBar() {
+fun RomanMenuDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState) {
+//    for (i in 0 until 5) {
+//        Text(text = "Item $i")
+//    }
+
+    //TODO fix the drawer width
+    //check why it wont work with just drawer state without scaffold state
+    ModalDrawer(
+        drawerState = scaffoldState.drawerState,
+        drawerContent = {
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
+                onClick = { scope.launch { scaffoldState.drawerState.close() } },
+                content = { Text("Close Drawer") }
+            )
+        },
+        content = {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = if (scaffoldState.drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
+                Spacer(Modifier.height(20.dp))
+                Button(onClick = { scope.launch { scaffoldState.drawerState.open() } }) {
+                    Text("Click to open")
+                }
+            }
+        }
+    )
+}
+
+@Composable
+fun RomanTopBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
     TopAppBar(
-        title = { Text(text = stringResource(id = R.string.app_name)) }
+        title = { Text(text = stringResource(id = R.string.app_name)) },
+        navigationIcon = {
+            IconButton(onClick = { scope.launch { scaffoldState.drawerState.open() } }) {
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "",
+                )
+            }
+
+        }
     )
 
 }
@@ -157,7 +204,7 @@ fun CardContent(title: String) {
                     "Travel" -> Icons.Filled.TravelExplore
                     "Day" -> Icons.Filled.Restaurant
                     "Set reminder" -> Icons.Filled.AddAlert
-                    else -> Icons.Filled.TripOrigin
+                    else -> Icons.Filled.Favorite
                 },
                 contentDescription = "",
                 modifier = Modifier
@@ -190,7 +237,6 @@ fun CardContent(title: String) {
                 "Set reminder" -> "Set a reminder to stay romantic"
                 else -> ""
             },
-//            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.body2.copy(fontSize = 22.sp)
         )
@@ -201,8 +247,10 @@ fun CardContent(title: String) {
 @Preview(showBackground = true)
 @Composable
 fun RomanTopBarPreview() {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
     RomanappTheme {
-        RomanTopBar()
+        RomanTopBar(scope = scope, scaffoldState = scaffoldState)
     }
 }
 
