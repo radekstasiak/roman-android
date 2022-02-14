@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,11 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import androidx.constraintlayout.compose.ConstraintLayout
 import io.radev.roman.ui.theme.RomanappTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -65,65 +66,56 @@ fun RomanApp() {
 
 @Composable
 fun RomanMenuDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState) {
-    //TODO replace with Constraint layout
-    //TODO figure out how to position text to start inside a button
-    Column(
+    ConstraintLayout(
         modifier = Modifier
+            .fillMaxHeight()
             .padding(
                 start = 16.dp,
-                top = 16.dp
+                top = 16.dp,
+                bottom = 16.dp
             )
     ) {
-        for (i in 0 until 5) {
-            TextButton(
+        val (column, bottomHint) = createRefs()
+
+        Column(
+            modifier = Modifier
+                .constrainAs(column) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                }
+        ) {
+            for (i in 0 until 5) {
+                TextButton(
+                    modifier = Modifier
+                        .padding(top = 16.dp),
+                    onClick = {}
+                ) {
+                    Text(text = "Item $i")
+                }
+            }
+            Button(
                 modifier = Modifier
                     .padding(top = 16.dp),
-                onClick = {}
-            ) {
-                Text(text = "Item $i")
-            }
+                onClick = { scope.launch { scaffoldState.drawerState.close() } },
+                content = { Text("Close Drawer") }
+            )
+
+
         }
-        Button(
-            modifier = Modifier
-                .padding(top = 16.dp),
-            onClick = { scope.launch { scaffoldState.drawerState.close() } },
-            content = { Text("Close Drawer") }
-        )
         Text(
             modifier = Modifier
-                .padding(top = 16.dp),
+                .constrainAs(bottomHint) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+
+                },
             text = "<<< Swipe to close <<<",
             color = LocalContentColor.current.copy(alpha = 0.3f)
         )
-
     }
 
-
-//    //TODO fix the drawer width
-//    //check why it wont work with just drawer state without scaffold state
-//    ModalDrawer(
-//        drawerState = scaffoldState.drawerState,
-//        drawerContent = {
-//            Button(
-//                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
-//                onClick = { scope.launch { scaffoldState.drawerState.close() } },
-//                content = { Text("Close Drawer") }
-//            )
-//        },
-//        content = {
-//            Column(
-//                modifier = Modifier.fillMaxSize().padding(16.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Text(text = if (scaffoldState.drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
-//                Spacer(Modifier.height(20.dp))
-//                Button(onClick = { scope.launch { scaffoldState.drawerState.open() } }) {
-//                    Text("Click to open")
-//                }
-//            }
-//        }
-//    )
 }
+
 
 @Composable
 fun RomanTopBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
@@ -273,6 +265,20 @@ fun CardContent(title: String) {
         )
     }
 
+}
+
+@Preview(
+    showBackground = true,
+    device = Devices.PIXEL_3A
+)
+@Composable
+fun MenuDrawerPreview() {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+    scaffoldState.drawerState.isOpen
+    RomanappTheme {
+        RomanMenuDrawer(scope = scope, scaffoldState = scaffoldState)
+    }
 }
 
 @Preview(showBackground = true)
