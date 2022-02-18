@@ -4,6 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import io.radev.roman.ui.dashboard.DashboardBodyContent
@@ -26,7 +27,7 @@ fun RomanNavHost(
         modifier = modifier
     ) {
         composable(route = RomanScreen.Dashboard.name) {
-            DashboardBodyContent()
+            DashboardBodyContent(navController)
         }
         composable(route = RomanScreen.Favorites.name) {
             Text(text = "Favorites")
@@ -34,11 +35,30 @@ fun RomanNavHost(
         composable(route = RomanScreen.Settings.name) {
             Text(text = "Settings")
         }
-        composable(route = RomanScreen.Settings.name) {
-            Text(text = "Settings")
+        composable(route = RomanScreen.Travel.name) {
+            Text(text = "Travel")
         }
         composable(route = RomanScreen.EatOut.name) {
             Text(text = "EatOut")
         }
+        composable(route = RomanScreen.SetReminder.name) {
+            Text(text = "Set Reminder")
+        }
+    }
+}
+
+fun navigateTo(
+    navController: NavHostController,
+    screenRoute: String,
+    popUpToScreenRoute: String = "",
+    navOptionsBuilder: (NavOptionsBuilder) -> Unit
+) {
+    navController.navigate(screenRoute) {
+        if (popUpToScreenRoute.isNotBlank()) {
+            popUpTo(popUpToScreenRoute) {
+                saveState = true
+            }
+        }
+        navOptionsBuilder(this)
     }
 }

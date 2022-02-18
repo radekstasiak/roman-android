@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,9 +20,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import io.radev.roman.ui.dashboard.DashboardBodyContent
 import io.radev.roman.ui.navigation.RomanNavHost
 import io.radev.roman.ui.navigation.RomanScreen
+import io.radev.roman.ui.navigation.navigateTo
 import io.radev.roman.ui.theme.RomanappTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -54,8 +53,20 @@ fun RomanApp() {
     )
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { RomanTopBar(scope = scope, scaffoldState = scaffoldState) },
-        drawerContent = { RomanMenuDrawer(scope = scope, scaffoldState = scaffoldState) },
+        topBar = {
+            RomanTopBar(
+                scope = scope,
+                scaffoldState = scaffoldState,
+                title = currentScreen.title
+            )
+        },
+        drawerContent = {
+            RomanMenuDrawer(
+                navController = navController,
+                scope = scope,
+                scaffoldState = scaffoldState
+            )
+        },
         bottomBar = {
             RomanBottomNavigation(
                 navController = navController,
@@ -63,14 +74,16 @@ fun RomanApp() {
             )
         }) { innerPaddings ->
         RomanNavHost(navController = navController, modifier = Modifier.padding(innerPaddings))
-        DashboardBodyContent(modifier = Modifier.padding(innerPaddings))
     }
 
 }
 
 
 @Composable
-fun RomanMenuDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState) {
+fun RomanMenuDrawer(
+    navController: NavHostController,
+    scope: CoroutineScope, scaffoldState: ScaffoldState
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxHeight()
@@ -93,7 +106,14 @@ fun RomanMenuDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState) {
                 TextButton(
                     modifier = Modifier
                         .padding(top = 16.dp),
-                    onClick = {}
+                    onClick = {
+                        scope.launch { scaffoldState.drawerState.close() }
+                        navigateTo(
+                            navController = navController,
+                            screenRoute = RomanScreen.SetReminder.name,
+                            popUpToScreenRoute = RomanScreen.Dashboard.name
+                        ) {}
+                    }
                 ) {
                     Text(text = "Item $i")
                 }
@@ -101,7 +121,9 @@ fun RomanMenuDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState) {
             Button(
                 modifier = Modifier
                     .padding(top = 16.dp),
-                onClick = { scope.launch { scaffoldState.drawerState.close() } },
+                onClick = {
+                    scope.launch { scaffoldState.drawerState.close() }
+                },
                 content = { Text("Close Drawer") }
             )
 
@@ -123,9 +145,13 @@ fun RomanMenuDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState) {
 
 
 @Composable
-fun RomanTopBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
+fun RomanTopBar(
+    scope: CoroutineScope,
+    scaffoldState: ScaffoldState,
+    title: String
+) {
     TopAppBar(
-        title = { Text(text = stringResource(id = R.string.app_name)) },
+        title = { Text(text = title) },
         navigationIcon = {
             IconButton(onClick = { scope.launch { scaffoldState.drawerState.open() } }) {
                 Icon(
@@ -149,7 +175,7 @@ fun RomanBottomNavigation(
         RomanScreen.Favorites,
         RomanScreen.Settings
     )
-    BottomNavigation() {
+    BottomNavigation {
         navigationItems.forEachIndexed { _, navigationItem ->
             BottomNavigationItem(
                 icon = {
@@ -160,7 +186,13 @@ fun RomanBottomNavigation(
                 selected = navigationItem == currentScreen,
                 label = { Text(text = navigationItem.title) },
                 onClick = {
-                    navController.navigate(navigationItem.name)
+                    navigateTo(
+                        navController = navController,
+                        screenRoute = navigationItem.name,
+                        popUpToScreenRoute = RomanScreen.Dashboard.name
+                    ) {
+                        it.launchSingleTop = true
+                    }
                 }
             )
         }
@@ -178,9 +210,14 @@ fun RomanBottomNavigation(
 fun MenuDrawerPreview() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+    val navController = rememberNavController()
     scaffoldState.drawerState.isOpen
     RomanappTheme {
-        RomanMenuDrawer(scope = scope, scaffoldState = scaffoldState)
+        RomanMenuDrawer(
+            navController = navController,
+            scope = scope,
+            scaffoldState = scaffoldState
+        )
     }
 }
 
@@ -190,7 +227,7 @@ fun RomanTopBarPreview() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     RomanappTheme {
-        RomanTopBar(scope = scope, scaffoldState = scaffoldState)
+        RomanTopBar(scope = scope, scaffoldState = scaffoldState, title = "Preview")
     }
 }
 
@@ -216,10 +253,6 @@ fun DefaultPreview() {
     }
 }
 
-data class NavigationItem(
-    val title: String,
-    val icon: ImageVector
-)
 
 
 

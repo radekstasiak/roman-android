@@ -1,6 +1,5 @@
 package io.radev.roman.ui.dashboard
 
-import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -27,6 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import io.radev.roman.ui.navigation.RomanScreen
+import io.radev.roman.ui.navigation.navigateTo
 import io.radev.roman.ui.theme.RomanappTheme
 
 /*
@@ -35,7 +37,10 @@ import io.radev.roman.ui.theme.RomanappTheme
  */
 
 @Composable
-fun DashboardBodyContent(modifier: Modifier = Modifier) {
+fun DashboardBodyContent(
+    navigationController: NavHostController,
+    modifier: Modifier = Modifier
+) {
     Surface(color = MaterialTheme.colors.background) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,7 +49,9 @@ fun DashboardBodyContent(modifier: Modifier = Modifier) {
                 .fillMaxHeight()
                 .padding(vertical = 8.dp, horizontal = 8.dp)
         ) {
-            DashboardMenuItems()
+            DashboardMenuItems { screen ->
+                navigateTo(navigationController, screen.name) { }
+            }
         }
 
     }
@@ -52,7 +59,10 @@ fun DashboardBodyContent(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun DashboardMenuItems(modifier: Modifier = Modifier) {
+fun DashboardMenuItems(
+    modifier: Modifier = Modifier,
+    onMenuItemClicked: (RomanScreen) -> Unit
+) {
     val itemList = arrayListOf("Travel", "Day", "Set reminder")
     LazyColumn(modifier = modifier) {
         items(itemList) { item ->
@@ -65,11 +75,14 @@ fun DashboardMenuItems(modifier: Modifier = Modifier) {
 //                    .height(100.dp)
                     .padding(vertical = 4.dp)
                     .clickable {
-                        when (item) {
-                            "Set reminder" -> {
-                                Log.d("clickable_debug", "will navigate to the reminder screen")
+                        onMenuItemClicked(
+                            when (item) {
+                                "Travel" -> RomanScreen.Travel
+                                "Day" -> RomanScreen.EatOut
+                                "Set reminder" -> RomanScreen.SetReminder
+                                else -> throw IllegalArgumentException("Option $item is not recognized.")
                             }
-                        }
+                        )
                     }
             ) {
                 CardContent(title = item)
