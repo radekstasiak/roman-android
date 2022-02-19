@@ -42,6 +42,7 @@ object Libraries {
         const val hilt = BuildPlugins.Versions.hiltGradle
         const val ktor = "1.6.7"
         const val koin = "3.1.5"
+        const val logbackClassics = "1.2.10"
     }
 
     const val ktxCore = "androidx.core:core-ktx:${Versions.ktxCore}"
@@ -56,6 +57,10 @@ object Libraries {
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics"
     const val kaptHilt = "com.google.dagger:hilt-compiler:${Versions.hilt}"
     const val ktor = "io.ktor:ktor-client-core:${Versions.ktor}"
+    const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
+    const val ktorLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+    const val ktorGson = "io.ktor:ktor-client-gson:${Versions.ktor}"
+    const val logbackClassics = "ch.qos.logback:logback-classic:${Versions.logbackClassics}"
     const val koin = "io.insert-koin:koin-android:${Versions.koin}"
 
     object Compose {

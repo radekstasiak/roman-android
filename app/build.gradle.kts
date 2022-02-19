@@ -44,6 +44,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
     }
     compileOptions {
@@ -81,6 +82,10 @@ dependencies {
 //    kapt(Libraries.kaptHilt)
     implementation(Libraries.koin)
     implementation(Libraries.ktor)
+    implementation(Libraries.ktorAndroid)
+    implementation(Libraries.ktorLogging)
+    implementation(Libraries.ktorGson)
+    implementation(Libraries.logbackClassics)
     implementation(platform(Libraries.firebaseBom))
     implementation(Libraries.firebaseAnalytics)
 
