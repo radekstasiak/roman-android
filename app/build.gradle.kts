@@ -3,7 +3,7 @@ plugins {
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.firebaseAppDistributionPlugin)
     id(BuildPlugins.kotlinKapt)
-    id(BuildPlugins.hiltAndroidPlugin)
+//    id(BuildPlugins.hiltAndroidPlugin)
 }
 
 android {
@@ -77,8 +77,9 @@ dependencies {
     implementation(Libraries.appCompat)
     implementation(Libraries.androidMaterial)
     implementation(Libraries.constraintLayout)
-    implementation(Libraries.hiltAndroid)
-    kapt(Libraries.kaptHilt)
+//    implementation(Libraries.hiltAndroid)
+//    kapt(Libraries.kaptHilt)
+    implementation(Libraries.koin)
     implementation(Libraries.ktor)
     implementation(platform(Libraries.firebaseBom))
     implementation(Libraries.firebaseAnalytics)

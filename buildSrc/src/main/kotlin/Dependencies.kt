@@ -13,8 +13,10 @@ object BuildPlugins {
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     const val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
-    const val firebaseAppDistribution = "com.google.firebase:firebase-appdistribution-gradle:${Versions.firebaseAppDistribution}"
-    const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltGradle}"
+    const val firebaseAppDistribution =
+        "com.google.firebase:firebase-appdistribution-gradle:${Versions.firebaseAppDistribution}"
+    const val hiltGradlePlugin =
+        "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltGradle}"
     const val androidApplication = "com.android.application"
     const val kotlinAndroid = "kotlin-android"
     const val firebaseAppDistributionPlugin = "com.google.firebase.appdistribution"
@@ -39,6 +41,7 @@ object Libraries {
         const val firebaseBom = "28.4.2"
         const val hilt = BuildPlugins.Versions.hiltGradle
         const val ktor = "1.6.7"
+        const val koin = "3.1.5"
     }
 
     const val ktxCore = "androidx.core:core-ktx:${Versions.ktxCore}"
@@ -53,6 +56,7 @@ object Libraries {
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics"
     const val kaptHilt = "com.google.dagger:hilt-compiler:${Versions.hilt}"
     const val ktor = "io.ktor:ktor-client-core:${Versions.ktor}"
+    const val koin = "io.insert-koin:koin-android:${Versions.koin}"
 
     object Compose {
         private object Versions {
@@ -71,14 +75,19 @@ object Libraries {
         const val ui = "androidx.compose.ui:ui:${Versions.compose}"
         const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
         const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.composeUiTooling}"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.composeConstraintLayout}"
-        const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
+        const val constraintLayout =
+            "androidx.constraintlayout:constraintlayout-compose:${Versions.composeConstraintLayout}"
+        const val navigation =
+            "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
         const val activity = "androidx.activity:activity-compose:${Versions.composeActivity}"
         const val material = "androidx.compose.material:material:${Versions.composeMaterial}"
         const val animation = "androidx.compose.animation:animation:${Versions.composeAnimation}"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.composeViewModel}"
-        const val themeAdapter = "com.google.android.material:compose-theme-adapter:${Versions.composeThemeAdapter}"
-        const val materialIcons = "androidx.compose.material:material-icons-extended:${Versions.composeMaterialIcons}"
+        const val viewModel =
+            "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.composeViewModel}"
+        const val themeAdapter =
+            "com.google.android.material:compose-theme-adapter:${Versions.composeThemeAdapter}"
+        const val materialIcons =
+            "androidx.compose.material:material-icons-extended:${Versions.composeMaterialIcons}"
     }
 
 
