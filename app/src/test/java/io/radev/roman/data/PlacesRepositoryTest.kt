@@ -1,18 +1,16 @@
 package io.radev.roman.data
 
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
+import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.mockk
 import io.radev.roman.CoroutineDispatcher
 import io.radev.roman.network.NetworkResponse
 import io.radev.roman.network.PlacesService
 import io.radev.roman.network.model.PlacesResponse
+import io.radev.roman.network.toNetworkResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert
@@ -36,17 +34,17 @@ class PlacesRepositoryTest {
     @RelaxedMockK
     lateinit var dispatcher: CoroutineDispatcher
 
-    val testDispatcher = TestCoroutineDispatcher()
 
     @Before
     fun setup() {
         MockKAnnotations.init(this)
+        mockkStatic("io.radev.roman.network.NetworkResponseKt")
         Dispatchers.setMain(mainThreadSurrogate)
         repository = PlacesRepositoryImpl(
             placesService = service,
             dispatcher = dispatcher
         )
-//        coEvery { dispatcher.IO } returns testDispatcher
+        every { dispatcher.IO } returns mainThreadSurrogate
 
     }
 
@@ -57,7 +55,7 @@ class PlacesRepositoryTest {
     }
 
     @Test
-    fun `when user gets places then successful response is returned correctly`() = runBlockingTest {
+    fun `when user gets places then successful response is returned correctly`() = runTest {
         //Given
         val placesResponseMock = mockk<PlacesResponse>(relaxed = true)
 
@@ -73,6 +71,29 @@ class PlacesRepositoryTest {
         val result = repository.getPlaces(category = "cat", lat = "lat", lon = "lon")
         Assert.assertTrue(result is NetworkResponse.Success)
         Assert.assertEquals(placesResponseMock, (result as NetworkResponse.Success).body)
+        verify { dispatcher.IO }
+    }
+
+    @Test
+    fun `when getPlaces returns exception its wrapped to NetworkResponse`() = runTest {
+        //Given
+        val exceptionMockk = mockk<Exception>(relaxed = true)
+        coEvery {
+            service.getPlaces(
+                category = "cat",
+                lat = "lat",
+                lon = "lon"
+            )
+        } throws exceptionMockk
+
+        every { exceptionMockk.toNetworkResponse() } returns NetworkResponse.UnknownError(
+            exceptionMockk
+        )
+        //When
+        val result = repository.getPlaces(category = "cat", lat = "lat", lon = "lon")
+        Assert.assertTrue(result is NetworkResponse.UnknownError)
+        Assert.assertEquals(exceptionMockk, (result as NetworkResponse.UnknownError).error)
+        verify { dispatcher.IO }
     }
 
 }
