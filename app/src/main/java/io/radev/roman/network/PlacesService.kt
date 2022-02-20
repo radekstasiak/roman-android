@@ -1,10 +1,7 @@
 package io.radev.roman.network
 
-import io.ktor.client.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.radev.roman.network.HttpRoutes.FETCH_IMAGES_URL
+import io.radev.roman.network.HttpRoutes.GET_PLACES
 import io.radev.roman.network.model.PlacesResponse
 
 /*
@@ -14,25 +11,23 @@ import io.radev.roman.network.model.PlacesResponse
  */
 
 class PlacesServiceImpl(
-    private val client: HttpClient,
+    private val apiClient: ApiClient,
 ) : PlacesService {
     override suspend fun getPlaces(
         category: String,
         lat: String,
         lon: String
     ): PlacesResponse {
-        return client.get {
+        return apiClient.httpClient.get {
             url(
-                FETCH_IMAGES_URL +
-                        HttpRoutes.HttpParams.PARAM_QUERY + category +"&"+
+                GET_PLACES +
+                        HttpRoutes.HttpParams.PARAM_QUERY + category + "&" +
                         HttpRoutes.HttpParams.PARAM_LL + "$lat,$lon"
             )
         }
     }
 
 }
-
-
 
 
 interface PlacesService {

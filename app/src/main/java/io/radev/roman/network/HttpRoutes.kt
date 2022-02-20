@@ -18,7 +18,7 @@ import io.ktor.http.*
 
 object HttpRoutes {
     private const val BASE_URL = "https://api.foursquare.com/v3"
-    const val FETCH_IMAGES_URL = "${BASE_URL}/places/search?"
+    const val GET_PLACES = "${BASE_URL}/places/search?"
 
     object HttpParams {
         const val PARAM_QUERY = "query="

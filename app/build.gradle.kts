@@ -109,6 +109,10 @@ dependencies {
     implementation(Libraries.Compose.koin)
 
     testImplementation(TestLibraries.junit)
+    testImplementation(TestLibraries.ktor)
+    testImplementation(TestLibraries.mockk)
+    testImplementation(TestLibraries.kotlinCoroutinesTest)
+
     androidTestImplementation(TestLibraries.extJunit)
     // UI Tests
     androidTestImplementation(TestLibraries.espressoCore)

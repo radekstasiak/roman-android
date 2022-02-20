@@ -1,5 +1,9 @@
 const val kotlinVersion = "1.5.31"
 
+object CommonVersions {
+    const val ktor = "1.6.7"
+}
+
 object BuildPlugins {
 
     object Versions {
@@ -40,7 +44,6 @@ object Libraries {
         const val constraintLayout = "2.0.4"
         const val firebaseBom = "28.4.2"
         const val hilt = BuildPlugins.Versions.hiltGradle
-        const val ktor = "1.6.7"
         const val koin = "3.2.0-beta-1"
         const val logbackClassics = "1.2.10"
     }
@@ -56,10 +59,10 @@ object Libraries {
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics"
     const val kaptHilt = "com.google.dagger:hilt-compiler:${Versions.hilt}"
-    const val ktor = "io.ktor:ktor-client-core:${Versions.ktor}"
-    const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
-    const val ktorLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
-    const val ktorGson = "io.ktor:ktor-client-gson:${Versions.ktor}"
+    const val ktor = "io.ktor:ktor-client-core:${CommonVersions.ktor}"
+    const val ktorAndroid = "io.ktor:ktor-client-android:${CommonVersions.ktor}"
+    const val ktorLogging = "io.ktor:ktor-client-logging:${CommonVersions.ktor}"
+    const val ktorGson = "io.ktor:ktor-client-gson:${CommonVersions.ktor}"
     const val logbackClassics = "ch.qos.logback:logback-classic:${Versions.logbackClassics}"
     const val koin = "io.insert-koin:koin-android:${Versions.koin}"
 
@@ -107,10 +110,16 @@ object TestLibraries {
         const val extJunit = "1.1.3"
         const val espressoCore = "3.4.0"
         const val composeJunit = "1.0.5"
+        const val mockk = "1.12.2"
+        const val kotlinCoroutinesTest = "1.6.0"
     }
 
     const val junit = "junit:junit:${Versions.junit}"
     const val extJunit = "androidx.test.ext:junit:${Versions.extJunit}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"
     const val composeJunit = "androidx.compose.ui:ui-test-junit4:${Versions.composeJunit}"
+    const val ktor = "io.ktor:ktor-client-mock:${CommonVersions.ktor}"
+    const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    const val kotlinCoroutinesTest =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutinesTest}"
 }
