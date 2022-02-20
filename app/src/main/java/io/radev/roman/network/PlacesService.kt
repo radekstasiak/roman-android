@@ -2,6 +2,7 @@ package io.radev.roman.network
 
 import io.ktor.client.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.radev.roman.network.HttpRoutes.FETCH_IMAGES_URL
 import io.radev.roman.network.model.PlacesResponse

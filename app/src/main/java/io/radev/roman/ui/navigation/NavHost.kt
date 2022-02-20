@@ -19,7 +19,8 @@ import io.radev.roman.ui.dashboard.DashboardBodyContent
 @Composable
 fun RomanNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    executeNetworkCall: ()->Unit
 ) {
     NavHost(
         navController = navController,
@@ -30,6 +31,7 @@ fun RomanNavHost(
             DashboardBodyContent(navController)
         }
         composable(route = RomanScreen.Favorites.name) {
+            executeNetworkCall()
             Text(text = "Favorites")
         }
         composable(route = RomanScreen.Settings.name) {

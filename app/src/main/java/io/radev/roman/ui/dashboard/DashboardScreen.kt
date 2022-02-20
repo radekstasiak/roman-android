@@ -29,7 +29,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import io.radev.roman.ui.navigation.RomanScreen
 import io.radev.roman.ui.navigation.navigateTo
+import io.radev.roman.ui.places.PlacesViewModel
 import io.radev.roman.ui.theme.RomanappTheme
+import org.koin.androidx.compose.getViewModel
 
 /*
  * Created by radoslaw on 17/02/2022.

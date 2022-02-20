@@ -9,6 +9,7 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.features.observer.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.radev.roman.R
 import io.radev.roman.network.PlacesService
@@ -51,4 +52,26 @@ fun provideHttpClient(context: Context): HttpClient =
         install(JsonFeature) {
             serializer = GsonSerializer()
         }
+
+//        HttpResponseValidator {
+//            validateResponse { response: HttpResponse ->
+//                val statusCode = response.status.value
+//response.headers.entries()
+//                println("HTTP status: $statusCode")
+//
+//                when (statusCode) {
+//                    in 300..399 -> throw RedirectResponseException(response)
+//                    in 400..499 -> throw ClientRequestException(response)
+//                    in 500..599 -> throw ServerResponseException(response)
+//                }
+//
+//                if (statusCode >= 600) {
+//                    throw ResponseException(response)
+//                }
+//            }
+//
+//            handleResponseException { cause: Throwable ->
+//                throw cause
+//            }
+//        }
     }

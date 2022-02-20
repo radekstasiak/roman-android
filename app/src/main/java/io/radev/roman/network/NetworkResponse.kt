@@ -2,6 +2,7 @@ package io.radev.roman.network
 
 import io.ktor.client.features.*
 import java.io.IOException
+import java.net.UnknownHostException
 
 /*
  * Created by Radoslaw on 19/02/2022.
@@ -39,5 +40,6 @@ fun Exception.toNetworkResponse() = when (this) {
     )
     is RedirectResponseException -> NetworkResponse.UnknownError(error = this)
     is IOException -> NetworkResponse.NetworkError(error = this)
+    is UnknownHostException -> NetworkResponse.NetworkError(error = this)
     else -> NetworkResponse.UnknownError(error = this)
 }

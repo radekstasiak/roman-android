@@ -75,8 +75,9 @@ fun RomanApp() {
                 currentScreen = currentScreen
             )
         }) { innerPaddings ->
-        vm.getPlaces()
-        RomanNavHost(navController = navController, modifier = Modifier.padding(innerPaddings))
+        RomanNavHost(navController = navController, modifier = Modifier.padding(innerPaddings)){
+            vm.getPlaces()
+        }
     }
 
 }
