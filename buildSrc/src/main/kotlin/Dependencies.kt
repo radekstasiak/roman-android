@@ -41,7 +41,7 @@ object Libraries {
         const val firebaseBom = "28.4.2"
         const val hilt = BuildPlugins.Versions.hiltGradle
         const val ktor = "1.6.7"
-        const val koin = "3.1.5"
+        const val koin = "3.2.0-beta-1"
         const val logbackClassics = "1.2.10"
     }
 
@@ -63,6 +63,7 @@ object Libraries {
     const val logbackClassics = "ch.qos.logback:logback-classic:${Versions.logbackClassics}"
     const val koin = "io.insert-koin:koin-android:${Versions.koin}"
 
+
     object Compose {
         private object Versions {
             const val compose = "1.0.3"
@@ -75,6 +76,7 @@ object Libraries {
             const val composeViewModel = "1.0.0-alpha07"
             const val composeThemeAdapter = "1.0.5"
             const val composeMaterialIcons = "1.0.3"
+            const val composeKoin = Libraries.Versions.koin
         }
 
         const val ui = "androidx.compose.ui:ui:${Versions.compose}"
@@ -93,6 +95,7 @@ object Libraries {
             "com.google.android.material:compose-theme-adapter:${Versions.composeThemeAdapter}"
         const val materialIcons =
             "androidx.compose.material:material-icons-extended:${Versions.composeMaterialIcons}"
+        const val koin = "io.insert-koin:koin-androidx-compose:${Versions.composeKoin}"
     }
 
 

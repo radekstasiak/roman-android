@@ -2,6 +2,8 @@ package io.radev.roman
 
 import android.app.Application
 import io.radev.roman.di.appModule
+import io.radev.roman.di.networkModule
+import io.radev.roman.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,13 +16,12 @@ import org.koin.core.context.startKoin
 
 
 class RomanApplication : Application() {
-
     override fun onCreate() {
         super.onCreate()
         startKoin {
             androidLogger()
             androidContext(this@RomanApplication)
-            modules(appModule)
+            modules(appModule, networkModule, viewModelModule)
         }
     }
 }

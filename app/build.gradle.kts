@@ -106,6 +106,7 @@ dependencies {
     implementation(Libraries.Compose.themeAdapter)
     implementation(Libraries.Compose.materialIcons)
     implementation(Libraries.Compose.animation)
+    implementation(Libraries.Compose.koin)
 
     testImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.extJunit)

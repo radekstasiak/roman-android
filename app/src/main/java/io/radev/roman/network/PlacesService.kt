@@ -21,10 +21,9 @@ class PlacesServiceImpl(
         lon: String
     ): PlacesResponse {
         return client.get {
-
             url(
                 FETCH_IMAGES_URL +
-                        HttpRoutes.HttpParams.PARAM_QUERY + category +
+                        HttpRoutes.HttpParams.PARAM_QUERY + category +"&"+
                         HttpRoutes.HttpParams.PARAM_LL + "$lat,$lon"
             )
         }

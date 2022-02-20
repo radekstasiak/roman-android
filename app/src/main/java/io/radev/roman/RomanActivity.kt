@@ -12,7 +12,6 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,10 +22,11 @@ import androidx.navigation.compose.rememberNavController
 import io.radev.roman.ui.navigation.RomanNavHost
 import io.radev.roman.ui.navigation.RomanScreen
 import io.radev.roman.ui.navigation.navigateTo
+import io.radev.roman.ui.places.PlacesViewModel
 import io.radev.roman.ui.theme.RomanappTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.koin.android.BuildConfig
+import org.koin.androidx.compose.getViewModel
 
 class DashboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +52,7 @@ fun RomanApp() {
     val currentScreen = RomanScreen.fromRoute(
         backstackEntry.value?.destination?.route
     )
+    val vm = getViewModel<PlacesViewModel>()
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -74,6 +75,7 @@ fun RomanApp() {
                 currentScreen = currentScreen
             )
         }) { innerPaddings ->
+        vm.getPlaces()
         RomanNavHost(navController = navController, modifier = Modifier.padding(innerPaddings))
     }
 

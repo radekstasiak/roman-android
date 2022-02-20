@@ -15,31 +15,6 @@ import io.ktor.http.*
  * radev.io 2022.
  * Peace and Love.
  */
-private const val TIME_OUT = 60_000
-
-@Suppress("EXPERIMENTAL_API_USAGE_FUTURE_ERROR")
-val client = HttpClient(Android) {
-    install(Logging) {
-        logger = Logger.DEFAULT
-        level = LogLevel.HEADERS
-    }
-    install(ResponseObserver) {
-        onResponse { response ->
-            Log.d("HTTP status:", "${response.status.value}")
-        }
-    }
-
-    install(DefaultRequest) {
-        headers {
-            append(HttpHeaders.Authorization, "apiKey")
-            append(HttpHeaders.ContentType, ContentType.Application.Json)
-        }
-    }
-
-    install(JsonFeature) {
-        serializer = GsonSerializer()
-    }
-}
 
 object HttpRoutes {
     private const val BASE_URL = "https://api.foursquare.com/v3"
