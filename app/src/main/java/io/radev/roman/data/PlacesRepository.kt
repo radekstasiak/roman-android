@@ -6,7 +6,9 @@ import io.radev.roman.network.NetworkResponse
 import io.radev.roman.network.PlacesService
 import io.radev.roman.network.model.PlacesResponse
 import io.radev.roman.network.toNetworkResponse
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /*
  * Created by Radoslaw on 19/02/2022.
@@ -22,19 +24,20 @@ class PlacesRepositoryImpl(
         category: String,
         lat: String,
         lon: String
-    ): NetworkResponse<PlacesResponse, ApiException> {
-        return withContext(dispatcher.IO) {
+    ): Flow<NetworkResponse<PlacesResponse, ApiException>> {
+        return flow {
             try {
                 val result = placesService.getPlaces(
                     category = category,
                     lat = lat,
                     lon = lon
                 )
-                NetworkResponse.Success(body = result)
+                emit(NetworkResponse.Success(body = result))
             } catch (exception: Exception) {
-                exception.toNetworkResponse()
+                //TODO check onError function
+                emit(exception.toNetworkResponse())
             }
-        }
+        }.flowOn(dispatcher.IO)
     }
 
 }
@@ -44,5 +47,5 @@ interface PlacesRepository {
         category: String,
         lat: String,
         lon: String
-    ): NetworkResponse<PlacesResponse, ApiException>
+    ): Flow<NetworkResponse<PlacesResponse, ApiException>>
 }

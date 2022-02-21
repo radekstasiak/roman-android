@@ -26,11 +26,11 @@ import io.radev.roman.ui.places.PlacesViewModel
 import io.radev.roman.ui.theme.RomanappTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
 
 class DashboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             RomanappTheme {
                 // A surface container using the 'background' color from the theme

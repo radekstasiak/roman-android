@@ -1,5 +1,6 @@
 package io.radev.roman.ui.places
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.radev.roman.CoroutineDispatcher
@@ -22,9 +23,20 @@ class PlacesViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ViewState<List<PlaceUiModel>>>(ViewState.Empty)
-    val uiState: StateFlow<ViewState<List<PlaceUiModel>>> = _uiState
+//    val uiState: StateFlow<ViewState<List<PlaceUiModel>>> = _uiState
+
+    val uiState = _uiState
+//        .map { it.toUiState() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            _uiState.value
+        )
+//    private val _uiState = MutableLiveData<ViewState<List<PlaceUiModel>>>(ViewState.Empty)
+//    val uiState = Transformations.map(_uiState) { it }
 
     fun getPlaces() {
+//        viewModelScope.launch(dispatcher.IO) {
         viewModelScope.launch(dispatcher.IO) {
             getPlacesUseCase.getPlaces("restaurants", "53.801277", "-1.548567")
                 .map { domainResponse ->
@@ -37,9 +49,18 @@ class PlacesViewModel(
                         NetworkStatus.NetworkError -> ViewState.NoNetwork
                         is NetworkStatus.UnknownError -> ViewState.Error(domainResponse.networkStatus.message)
                     }
+
+                }
+                .catch { exception ->
+                    Log.d("teest", "test")
                 }
                 .flowOn(dispatcher.IO)
-                .collect { _uiState.value = it }
+                .collect { viewState ->
+                    Log.d("teest", "${viewState}")
+//                    _uiState.postValue(it)
+
+                    _uiState.update { viewState }
+                }
         }
     }
 }

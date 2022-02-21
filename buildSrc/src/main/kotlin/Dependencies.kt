@@ -80,6 +80,7 @@ object Libraries {
             const val composeThemeAdapter = "1.0.5"
             const val composeMaterialIcons = "1.0.3"
             const val composeKoin = Libraries.Versions.koin
+            const val runtimeLiveData = "1.1.0"
         }
 
         const val ui = "androidx.compose.ui:ui:${Versions.compose}"
@@ -99,6 +100,8 @@ object Libraries {
         const val materialIcons =
             "androidx.compose.material:material-icons-extended:${Versions.composeMaterialIcons}"
         const val koin = "io.insert-koin:koin-androidx-compose:${Versions.composeKoin}"
+        const val runtimeLiveData =
+            "androidx.compose.runtime:runtime-livedata:${Versions.runtimeLiveData}"
     }
 
 

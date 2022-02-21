@@ -6,9 +6,13 @@ import io.radev.roman.domain.model.NetworkStatus
 import io.radev.roman.network.NetworkResponse
 import io.radev.roman.network.model.PlaceEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.transform
+
+//import kotlinx.coroutines.flow.flowOn
+//import kotlinx.coroutines.flow.onStart
+//import kotlinx.coroutines.flow.transform
 
 /*
  * Created by Radoslaw on 20/02/2022.
@@ -34,27 +38,26 @@ class GetPlacesUseCaseImpl(
         lat: String,
         lon: String
     ): Flow<GetPlacesDomainModel> {
-        return flow<GetPlacesDomainModel> {
-            val result = placesRepository.getPlaces(
-                category = category,
-                lat = lat,
-                lon = lon
-            )
+        return placesRepository.getPlaces(
+            category = category,
+            lat = lat,
+            lon = lon
+        ).transform { response ->
             emit(
-                when (result) {
+                when (response) {
                     is NetworkResponse.Success -> GetPlacesDomainModel(
                         networkStatus = NetworkStatus.Success,
-                        results = result.body.results
+                        results = response.body.results
                     )
                     is NetworkResponse.ApiError -> GetPlacesDomainModel(
                         networkStatus = NetworkStatus.ApiError(
-                            message = result.error?.toString() ?: result.code.toString()
+                            message = response.error?.toString() ?: response.code.toString()
                         )
                     )
                     is NetworkResponse.NetworkError -> GetPlacesDomainModel(networkStatus = NetworkStatus.NetworkError)
                     is NetworkResponse.UnknownError -> GetPlacesDomainModel(
                         networkStatus = NetworkStatus.UnknownError(
-                            message = result.error?.toString() ?: ""
+                            message = response.error?.toString() ?: ""
                         )
                     )
                 }

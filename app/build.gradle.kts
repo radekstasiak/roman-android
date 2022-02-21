@@ -107,7 +107,7 @@ dependencies {
     implementation(Libraries.Compose.materialIcons)
     implementation(Libraries.Compose.animation)
     implementation(Libraries.Compose.koin)
-
+    implementation(Libraries.Compose.runtimeLiveData)
     testImplementation(TestLibraries.junit)
     testImplementation(TestLibraries.ktor)
     testImplementation(TestLibraries.mockk)

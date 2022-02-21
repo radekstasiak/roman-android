@@ -31,9 +31,12 @@ fun PlacesScreen(
     placesViewModel: PlacesViewModel = getViewModel(),
     onPlaceSelected: (PlaceUiModel) -> Unit
 ) {
+//    val state = remember { placesViewModel.uiState.value }
     val onRetryClicked = {
         placesViewModel.getPlaces()
     }
+//    when (state) {
+//    when (val state = placesViewModel.uiState.observeAsState().value) {
     when (val state = placesViewModel.uiState.collectAsState().value) {
         ViewState.Loading -> PlacesLoading()
         is ViewState.Loaded -> PlacesLoaded(
