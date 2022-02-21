@@ -3,4 +3,13 @@
     <string name="enter_your_mesage">Enter your mesage</string>
     <string name="send">Send</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
+
+
+    <!-- Network State -->
+    <string name="api_in_progress">Loading…</string>
+    <string name="api_try_again">Try again</string>
+    <string name="api_no_network">Please check your network connection…</string>
+    <string name="api_network_error">There was an error with you request: 1%s</string>
+    <string name="api_general_error">There was an error: 1%s</string>
+
 </resources>

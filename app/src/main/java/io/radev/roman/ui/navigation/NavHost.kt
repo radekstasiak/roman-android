@@ -8,6 +8,7 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import io.radev.roman.ui.dashboard.DashboardBodyContent
+import io.radev.roman.ui.places.PlacesScreen
 
 /*
  * Created by Radoslaw on 17/02/2022.
@@ -19,8 +20,7 @@ import io.radev.roman.ui.dashboard.DashboardBodyContent
 @Composable
 fun RomanNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
-    executeNetworkCall: ()->Unit
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
@@ -28,10 +28,9 @@ fun RomanNavHost(
         modifier = modifier
     ) {
         composable(route = RomanScreen.Dashboard.name) {
-            DashboardBodyContent(navController)
+            DashboardBodyContent(navigationController = navController)
         }
         composable(route = RomanScreen.Favorites.name) {
-            executeNetworkCall()
             Text(text = "Favorites")
         }
         composable(route = RomanScreen.Settings.name) {
@@ -40,8 +39,8 @@ fun RomanNavHost(
         composable(route = RomanScreen.Travel.name) {
             Text(text = "Travel")
         }
-        composable(route = RomanScreen.EatOut.name) {
-            Text(text = "EatOut")
+        composable(route = RomanScreen.Places.name) {
+            PlacesScreen(onPlaceSelected = { })
         }
         composable(route = RomanScreen.SetReminder.name) {
             Text(text = "Set Reminder")

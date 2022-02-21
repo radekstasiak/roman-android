@@ -52,7 +52,7 @@ fun RomanApp() {
     val currentScreen = RomanScreen.fromRoute(
         backstackEntry.value?.destination?.route
     )
-    val vm = getViewModel<PlacesViewModel>()
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -75,9 +75,7 @@ fun RomanApp() {
                 currentScreen = currentScreen
             )
         }) { innerPaddings ->
-        RomanNavHost(navController = navController, modifier = Modifier.padding(innerPaddings)){
-            vm.getPlaces()
-        }
+        RomanNavHost(navController = navController, modifier = Modifier.padding(innerPaddings))
     }
 
 }

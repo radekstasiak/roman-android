@@ -19,7 +19,7 @@ enum class RomanScreen(
     Favorites(title = "Favorites", icon = Icons.Filled.Favorite),
     Settings(title = "Settings", icon = Icons.Filled.Settings),
     Travel(title = "Travel", icon = null),
-    EatOut(title = "Eat Out", icon = null),
+    Places(title = "Places", icon = null),
     SetReminder(title = "Set reminder", icon = null);
 
 
@@ -30,7 +30,7 @@ enum class RomanScreen(
                 Favorites.name -> Favorites
                 Settings.name -> Settings
                 Travel.name -> Travel
-                EatOut.name -> EatOut
+                Places.name -> Places
                 SetReminder.name -> SetReminder
                 null -> Dashboard
                 else -> throw IllegalArgumentException("Route $route is not recognized.")

@@ -40,6 +40,7 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun DashboardBodyContent(
+    placesViewModel: PlacesViewModel = getViewModel(),
     navigationController: NavHostController,
     modifier: Modifier = Modifier
 ) {
@@ -52,7 +53,10 @@ fun DashboardBodyContent(
                 .padding(vertical = 8.dp, horizontal = 8.dp)
         ) {
             DashboardMenuItems { screen ->
-                navigateTo(navigationController, screen.name) { }
+                when (screen) {
+                    RomanScreen.Places -> placesViewModel.getPlaces()
+                }
+                navigateTo(navigationController, screen.name) {}
             }
         }
 
@@ -80,7 +84,7 @@ fun DashboardMenuItems(
                         onMenuItemClicked(
                             when (item) {
                                 "Travel" -> RomanScreen.Travel
-                                "Day" -> RomanScreen.EatOut
+                                "Day" -> RomanScreen.Places
                                 "Set reminder" -> RomanScreen.SetReminder
                                 else -> throw IllegalArgumentException("Option $item is not recognized.")
                             }
