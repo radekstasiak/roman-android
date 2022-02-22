@@ -1,7 +1,12 @@
 package io.radev.roman
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import io.radev.roman.di.appModule
+import io.radev.roman.di.networkModule
+import io.radev.roman.di.viewModelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 /*
  * Created by Radoslaw on 18/02/2022.
@@ -9,5 +14,14 @@ import dagger.hilt.android.HiltAndroidApp
  * Peace and Love.
  */
 
-@HiltAndroidApp
-class RomanApplication : Application()
+
+class RomanApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidLogger()
+            androidContext(this@RomanApplication)
+            modules(appModule, networkModule, viewModelModule)
+        }
+    }
+}
