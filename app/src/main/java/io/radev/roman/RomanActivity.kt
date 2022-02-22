@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,7 +23,6 @@ import androidx.navigation.compose.rememberNavController
 import io.radev.roman.ui.navigation.RomanNavHost
 import io.radev.roman.ui.navigation.RomanScreen
 import io.radev.roman.ui.navigation.navigateTo
-import io.radev.roman.ui.places.PlacesViewModel
 import io.radev.roman.ui.theme.RomanappTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -59,7 +59,7 @@ fun RomanApp() {
             RomanTopBar(
                 scope = scope,
                 scaffoldState = scaffoldState,
-                title = currentScreen.title
+                title = stringResource(id = currentScreen.id)
             )
         },
         drawerContent = {
@@ -186,7 +186,7 @@ fun RomanBottomNavigation(
                     }
                 },
                 selected = navigationItem == currentScreen,
-                label = { Text(text = navigationItem.title) },
+                label = { Text(text = stringResource(id = navigationItem.id)) },
                 onClick = {
                     navigateTo(
                         navController = navController,

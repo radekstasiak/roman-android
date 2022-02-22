@@ -5,14 +5,7 @@ import io.radev.roman.data.PlacesRepository
 import io.radev.roman.domain.model.NetworkStatus
 import io.radev.roman.network.NetworkResponse
 import io.radev.roman.network.model.PlaceEntity
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.transform
-
-//import kotlinx.coroutines.flow.flowOn
-//import kotlinx.coroutines.flow.onStart
-//import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.*
 
 /*
  * Created by Radoslaw on 20/02/2022.
@@ -63,6 +56,15 @@ class GetPlacesUseCaseImpl(
                 }
             )
         }.onStart { emit(GetPlacesDomainModel(networkStatus = NetworkStatus.InProgress)) }
+            .catch { exception ->
+                emit(
+                    GetPlacesDomainModel(
+                        networkStatus = NetworkStatus.UnknownError(
+                            message = exception.localizedMessage ?: ""
+                        )
+                    )
+                )
+            }
             .flowOn(dispatcher.IO)
 
     }

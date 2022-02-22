@@ -115,6 +115,7 @@ object TestLibraries {
         const val composeJunit = "1.0.5"
         const val mockk = "1.12.2"
         const val kotlinCoroutinesTest = "1.6.0"
+        const val coreTesting = "1.1.0"
     }
 
     const val junit = "junit:junit:${Versions.junit}"
@@ -125,4 +126,5 @@ object TestLibraries {
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
     const val kotlinCoroutinesTest =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutinesTest}"
+    const val coreTesting = "android.arch.core:core-testing:${Versions.coreTesting}"
 }

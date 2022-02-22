@@ -1,23 +1,28 @@
 package io.radev.roman.ui.places
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.radev.roman.R
+import io.radev.roman.ui.common.ErrorScreen
+import io.radev.roman.ui.common.NetworkErrorScreen
+import io.radev.roman.ui.common.NoNetworkScreen
 import io.radev.roman.ui.common.ViewState
+import io.radev.roman.ui.theme.RomanappTheme
 import org.koin.androidx.compose.getViewModel
 
 /*
@@ -28,33 +33,51 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun PlacesScreen(
+    modifier: Modifier = Modifier,
     placesViewModel: PlacesViewModel = getViewModel(),
     onPlaceSelected: (PlaceUiModel) -> Unit
 ) {
-//    val state = remember { placesViewModel.uiState.value }
+    val uiState by placesViewModel.uiState.collectAsState()
     val onRetryClicked = {
         placesViewModel.getPlaces()
     }
-//    when (state) {
-//    when (val state = placesViewModel.uiState.observeAsState().value) {
-    when (val state = placesViewModel.uiState.collectAsState().value) {
+
+    when (uiState) {
         ViewState.Loading -> PlacesLoading()
         is ViewState.Loaded -> PlacesLoaded(
-            places = state.uiModel,
+            modifier = modifier,
+            places = (uiState as ViewState.Loaded<List<PlaceUiModel>>).uiModel,
             onPlaceSelected = onPlaceSelected
         )
-        ViewState.NoNetwork -> NoNetwork(onRetryClicked = onRetryClicked)
-        is ViewState.NetworkError -> NetworkError(state.message, onRetryClicked = onRetryClicked)
-        is ViewState.Error -> ErrorScreen(message = state.message, onRetryClicked = onRetryClicked)
+        ViewState.NoNetwork -> NoNetworkScreen(onRetryClicked = onRetryClicked)
+        is ViewState.NetworkError -> NetworkErrorScreen(
+            modifier = modifier,
+            message = (uiState as ViewState.NetworkError).message,
+            onRetryClicked = onRetryClicked
+        )
+        is ViewState.Error -> ErrorScreen(
+            modifier = modifier,
+            message = (uiState as ViewState.Error).message,
+            onRetryClicked = onRetryClicked
+        )
     }
 }
 
 @Composable
-fun PlacesLoading() {
-    Text(
-        text = stringResource(id = R.string.api_in_progress),
-        style = MaterialTheme.typography.body1
-    )
+fun PlacesLoading(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .fillMaxHeight()
+            .wrapContentHeight(align = Alignment.CenterVertically)
+            .wrapContentWidth(align = Alignment.CenterHorizontally)
+    ) {
+        Text(
+            text = stringResource(id = R.string.api_in_progress),
+            style = MaterialTheme.typography.body1
+        )
+    }
+
 }
 
 @Composable
@@ -63,54 +86,70 @@ fun PlacesLoaded(
     places: List<PlaceUiModel>,
     onPlaceSelected: (PlaceUiModel) -> Unit
 ) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier
+            .clipToBounds()
+    ) {
         items(places) { place ->
             Card(
-                backgroundColor = MaterialTheme.colors.primary,
-                shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 15)),
+                shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 5)),
                 modifier = Modifier
+                    .padding(8.dp)
+                    .defaultMinSize(minHeight = 80.dp)
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp)
                     .clickable { onPlaceSelected(place) }
             ) {
-                Column {
+                Column(modifier = Modifier.padding(8.dp)) {
                     //TODO display icon
                     Text(text = place.name, style = MaterialTheme.typography.body1)
-                    Text(text = place.address, style = MaterialTheme.typography.body2)
+                    Text(
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        text = place.address,
+                        style = MaterialTheme.typography.body2
+                    )
                 }
             }
         }
     }
 }
 
-@Composable
-fun NoNetwork(onRetryClicked: () -> Unit) =
-    ErrorScreen(
-        message = stringResource(id = R.string.api_no_network),
-        onRetryClicked = onRetryClicked
-    )
 
+@Preview(showBackground = true)
 @Composable
-fun NetworkError(message: String, onRetryClicked: () -> Unit) =
-    ErrorScreen(
-        message = String.format(stringResource(id = R.string.api_no_network), message),
-        onRetryClicked = onRetryClicked
-    )
-
-
-@Composable
-fun ErrorScreen(
-    message: String,
-    onRetryClicked: () -> Unit
-) {
-    Column {
-        Text(
-            text = String.format(stringResource(id = R.string.api_in_progress), message),
-            style = MaterialTheme.typography.body1
+fun PlacesLoadedPreview() {
+    val uiModelList = listOf(
+        PlaceUiModel(
+            name = "Place 1",
+            address = "Street, Post Code, City",
+            lat = 0.0,
+            lon = 0.0,
+            icon = ""
+        ),
+        PlaceUiModel(
+            name = "Place 2",
+            address = "Street, Post Code, City",
+            lat = 0.0,
+            lon = 0.0,
+            icon = ""
+        ),
+        PlaceUiModel(
+            name = "Place 3",
+            address = "Street, Post Code, City",
+            lat = 0.0,
+            lon = 0.0,
+            icon = ""
         )
-        Button(onClick = onRetryClicked) {
-            Text(text = stringResource(id = R.string.api_try_again))
-        }
+    )
+    RomanappTheme {
+        PlacesLoaded(places = uiModelList) {}
     }
+}
 
+
+@Preview(showBackground = true)
+@Composable
+fun PlacesLoadingPreview() {
+    RomanappTheme {
+        PlacesLoading()
+    }
 }

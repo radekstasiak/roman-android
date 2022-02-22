@@ -4,12 +4,23 @@
     <string name="send">Send</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
 
+    <!-- Screen IDs -->
+    <string name="screen_dashboard_title">Dashboard</string>
+    <string name="screen_favourites_title">Favourites</string>
+    <string name="screen_settings_title">Settings</string>
+    <string name="screen_travel_title">Travel</string>
+    <string name="screen_places_title">Places</string>
+    <string name="screen_set_reminder_title">Set reminder</string>
+    <!-- Dashboard -->
+    <string name="dashboard_item_travel_desc">Plan a trip together</string>
+    <string name="dashboard_item_places_desc">Plan a night out together</string>
+    <string name="dashboard_item_set_reminder_desc">Set a reminder to stay romantic</string>
 
     <!-- Network State -->
     <string name="api_in_progress">Loading…</string>
     <string name="api_try_again">Try again</string>
     <string name="api_no_network">Please check your network connection…</string>
-    <string name="api_network_error">There was an error with you request: 1%s</string>
-    <string name="api_general_error">There was an error: 1%s</string>
+    <string name="api_network_error">There was an error with you request: %s</string>
+    <string name="api_general_error">There was an error:\n%s</string>
 
 </resources>

@@ -10,10 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddAlert
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Restaurant
-import androidx.compose.material.icons.filled.TravelExplore
 import androidx.compose.material.icons.outlined.Help
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,16 +18,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import io.radev.roman.R
 import io.radev.roman.ui.navigation.RomanScreen
 import io.radev.roman.ui.navigation.navigateTo
-import io.radev.roman.ui.places.PlacesViewModel
 import io.radev.roman.ui.theme.RomanappTheme
-import org.koin.androidx.compose.getViewModel
 
 /*
  * Created by radoslaw on 17/02/2022.
@@ -40,7 +36,6 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun DashboardBodyContent(
-    placesViewModel: PlacesViewModel = getViewModel(),
     navigationController: NavHostController,
     modifier: Modifier = Modifier
 ) {
@@ -53,9 +48,6 @@ fun DashboardBodyContent(
                 .padding(vertical = 8.dp, horizontal = 8.dp)
         ) {
             DashboardMenuItems { screen ->
-                when (screen) {
-                    RomanScreen.Places -> placesViewModel.getPlaces()
-                }
                 navigateTo(navigationController, screen.name) {}
             }
         }
@@ -69,7 +61,11 @@ fun DashboardMenuItems(
     modifier: Modifier = Modifier,
     onMenuItemClicked: (RomanScreen) -> Unit
 ) {
-    val itemList = arrayListOf("Travel", "Day", "Set reminder")
+    val itemList = arrayListOf(
+        RomanScreen.Travel,
+        RomanScreen.Places,
+        RomanScreen.SetReminder
+    )
     LazyColumn(modifier = modifier) {
         items(itemList) { item ->
             Card(
@@ -78,20 +74,12 @@ fun DashboardMenuItems(
                 modifier = Modifier
                     .fillMaxWidth()
                     .defaultMinSize(minHeight = 100.dp)
-//                    .height(100.dp)
                     .padding(vertical = 4.dp)
                     .clickable {
-                        onMenuItemClicked(
-                            when (item) {
-                                "Travel" -> RomanScreen.Travel
-                                "Day" -> RomanScreen.Places
-                                "Set reminder" -> RomanScreen.SetReminder
-                                else -> throw IllegalArgumentException("Option $item is not recognized.")
-                            }
-                        )
+                        onMenuItemClicked(item)
                     }
             ) {
-                CardContent(title = item)
+                CardContent(item = item)
             }
         }
     }
@@ -99,7 +87,7 @@ fun DashboardMenuItems(
 }
 
 @Composable
-fun CardContent(title: String) {
+fun CardContent(item: RomanScreen) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     Column(
         modifier = Modifier
@@ -117,21 +105,19 @@ fun CardContent(title: String) {
                 .padding(top = 16.dp)
 
         ) {
-            Icon(
-                imageVector = when (title) {
-                    "Travel" -> Icons.Filled.TravelExplore
-                    "Day" -> Icons.Filled.Restaurant
-                    "Set reminder" -> Icons.Filled.AddAlert
-                    else -> Icons.Filled.Favorite
-                },
-                contentDescription = "",
-                modifier = Modifier
-                    .padding(start = 16.dp, end = 8.dp)
-            )
+            item.icon?.let { icon ->
+                Icon(
+                    imageVector = icon,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 8.dp)
+                )
+            }
+
             Text(
                 modifier = Modifier
                     .weight(1f),
-                text = title,
+                text = stringResource(item.id),
                 style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold)
 
             )
@@ -149,10 +135,10 @@ fun CardContent(title: String) {
         }
 
         if (expanded) Text(
-            text = when (title) {
-                "Travel" -> "Plan a trip together"
-                "Day" -> "Plan a night out together"
-                "Set reminder" -> "Set a reminder to stay romantic"
+            text = when (item) {
+                RomanScreen.Travel -> stringResource(R.string.dashboard_item_travel_desc)
+                RomanScreen.Places -> stringResource(R.string.dashboard_item_places_desc)
+                RomanScreen.SetReminder -> stringResource(R.string.dashboard_item_set_reminder_desc)
                 else -> ""
             },
             modifier = Modifier.padding(16.dp),
@@ -170,6 +156,6 @@ fun CardContent(title: String) {
 @Composable
 fun DashboardItemPreview() {
     RomanappTheme {
-        CardContent(title = "Test title")
+        CardContent(item = RomanScreen.Travel)
     }
 }

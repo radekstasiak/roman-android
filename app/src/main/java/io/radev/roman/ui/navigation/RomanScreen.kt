@@ -1,10 +1,9 @@
 package io.radev.roman.ui.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
+import io.radev.roman.R
 
 /*
  * Created by radoslaw on 17/02/2022.
@@ -12,15 +11,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
  */
 
 enum class RomanScreen(
-    val title: String,
+    val id: Int,
     val icon: ImageVector?
 ) {
-    Dashboard(title = "Dashboard", icon = Icons.Filled.Menu),
-    Favorites(title = "Favorites", icon = Icons.Filled.Favorite),
-    Settings(title = "Settings", icon = Icons.Filled.Settings),
-    Travel(title = "Travel", icon = null),
-    Places(title = "Places", icon = null),
-    SetReminder(title = "Set reminder", icon = null);
+    Dashboard(id = R.string.screen_dashboard_title, icon = Icons.Filled.Menu),
+    Favorites(id = R.string.screen_favourites_title, icon = Icons.Filled.Favorite),
+    Settings(id = R.string.screen_settings_title, icon = Icons.Filled.Settings),
+    Travel(id = R.string.screen_travel_title, icon = Icons.Filled.TravelExplore),
+    Places(id = R.string.screen_places_title, icon = Icons.Filled.Restaurant),
+    SetReminder(id = R.string.screen_set_reminder_title, icon = Icons.Filled.AddAlert);
 
 
     companion object {

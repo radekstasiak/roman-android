@@ -11,7 +11,7 @@ import io.radev.roman.network.model.PlacesResponse
  */
 
 class PlacesServiceImpl(
-    private val apiClient: ApiClient,
+    private val apiClient: ApiClient
 ) : PlacesService {
     override suspend fun getPlaces(
         category: String,

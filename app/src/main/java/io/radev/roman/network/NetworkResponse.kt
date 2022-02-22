@@ -32,7 +32,7 @@ sealed class NetworkResponse<out T : Any, out U : Any> {
     data class UnknownError(val error: Throwable?) : NetworkResponse<Nothing, Nothing>()
 }
 
-fun Exception.toNetworkResponse() = when (this) {
+fun Throwable.toNetworkResponse() = when (this) {
     is ServerResponseException -> NetworkResponse.UnknownError(error = this)
     is ClientRequestException -> NetworkResponse.ApiError(
         error = this,
