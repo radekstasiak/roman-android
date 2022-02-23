@@ -7,7 +7,10 @@ import io.radev.roman.domain.GetPlacesUseCase
 import io.radev.roman.domain.model.NetworkStatus
 import io.radev.roman.network.model.PlaceEntity
 import io.radev.roman.ui.common.ViewState
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /*
@@ -22,32 +25,37 @@ class PlacesViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ViewState<List<PlaceUiModel>>>(ViewState.Empty)
-    val uiState: StateFlow<ViewState<List<PlaceUiModel>>> = _uiState
+
+    // UI state exposed to the UI
+    val uiState = _uiState
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            _uiState.value
+        )
 
     fun getPlaces(
         category: String = "restaurants",
         lat: String = "53.801277",
         lon: String = "-1.548567"
     ) {
+        _uiState.update { ViewState.Loading }
         viewModelScope.launch(dispatcher.IO) {
-            getPlacesUseCase.getPlaces(category, lat, lon)
-                .map { domainResponse ->
-                    when (domainResponse.networkStatus) {
-                        NetworkStatus.InProgress -> ViewState.Loading
-                        NetworkStatus.Success -> ViewState.Loaded(domainResponse.results
-                            .filter { it.geocodes?.main != null }
-                            .map { it.toPlaceUiModel() })
-                        is NetworkStatus.ApiError -> ViewState.NetworkError(message = domainResponse.networkStatus.message)
-                        NetworkStatus.NetworkError -> ViewState.NoNetwork
-                        is NetworkStatus.UnknownError -> ViewState.Error(domainResponse.networkStatus.message)
+            kotlin.runCatching { getPlacesUseCase.getPlaces(category, lat, lon) }
+                .onSuccess { domainResponse ->
+                    _uiState.update {
+                        when (domainResponse.networkStatus) {
+                            NetworkStatus.Success -> ViewState.Loaded(domainResponse.results
+                                .filter { it.geocodes?.main != null }
+                                .map { it.toPlaceUiModel() })
+                            is NetworkStatus.ApiError -> ViewState.NetworkError(message = domainResponse.networkStatus.message)
+                            NetworkStatus.NetworkError -> ViewState.NoNetwork
+                            is NetworkStatus.UnknownError -> ViewState.Error(domainResponse.networkStatus.message)
+                        }
                     }
                 }
-                .catch { exception ->
-                    ViewState.Error(exception.message ?: "")
-                }
-                .flowOn(dispatcher.IO)
-                .collect { viewState ->
-                    _uiState.update { viewState }
+                .onFailure { exception ->
+                    _uiState.update { ViewState.Error(exception.message ?: "") }
                 }
         }
     }

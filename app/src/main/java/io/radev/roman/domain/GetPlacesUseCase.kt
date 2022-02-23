@@ -5,7 +5,7 @@ import io.radev.roman.data.PlacesRepository
 import io.radev.roman.domain.model.NetworkStatus
 import io.radev.roman.network.NetworkResponse
 import io.radev.roman.network.model.PlaceEntity
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 
 /*
  * Created by Radoslaw on 20/02/2022.
@@ -19,7 +19,7 @@ interface GetPlacesUseCase {
         category: String,
         lat: String,
         lon: String
-    ): Flow<GetPlacesDomainModel>
+    ): GetPlacesDomainModel
 }
 
 class GetPlacesUseCaseImpl(
@@ -30,43 +30,32 @@ class GetPlacesUseCaseImpl(
         category: String,
         lat: String,
         lon: String
-    ): Flow<GetPlacesDomainModel> {
-        return placesRepository.getPlaces(
-            category = category,
-            lat = lat,
-            lon = lon
-        ).transform { response ->
-            emit(
-                when (response) {
-                    is NetworkResponse.Success -> GetPlacesDomainModel(
-                        networkStatus = NetworkStatus.Success,
-                        results = response.body.results
-                    )
-                    is NetworkResponse.ApiError -> GetPlacesDomainModel(
-                        networkStatus = NetworkStatus.ApiError(
-                            message = response.error?.toString() ?: response.code.toString()
-                        )
-                    )
-                    is NetworkResponse.NetworkError -> GetPlacesDomainModel(networkStatus = NetworkStatus.NetworkError)
-                    is NetworkResponse.UnknownError -> GetPlacesDomainModel(
-                        networkStatus = NetworkStatus.UnknownError(
-                            message = response.error?.toString() ?: ""
-                        )
-                    )
-                }
+    ): GetPlacesDomainModel {
+        return withContext(dispatcher.IO) {
+            val response = placesRepository.getPlaces(
+                category = category,
+                lat = lat,
+                lon = lon
             )
-        }.onStart { emit(GetPlacesDomainModel(networkStatus = NetworkStatus.InProgress)) }
-            .catch { exception ->
-                emit(
-                    GetPlacesDomainModel(
-                        networkStatus = NetworkStatus.UnknownError(
-                            message = exception.localizedMessage ?: ""
-                        )
+
+            when (response) {
+                is NetworkResponse.Success -> GetPlacesDomainModel(
+                    networkStatus = NetworkStatus.Success,
+                    results = response.body.results
+                )
+                is NetworkResponse.ApiError -> GetPlacesDomainModel(
+                    networkStatus = NetworkStatus.ApiError(
+                        message = response.error?.toString() ?: response.code.toString()
+                    )
+                )
+                is NetworkResponse.NetworkError -> GetPlacesDomainModel(networkStatus = NetworkStatus.NetworkError)
+                is NetworkResponse.UnknownError -> GetPlacesDomainModel(
+                    networkStatus = NetworkStatus.UnknownError(
+                        message = response.error?.toString() ?: ""
                     )
                 )
             }
-            .flowOn(dispatcher.IO)
-
+        }
     }
 
 }

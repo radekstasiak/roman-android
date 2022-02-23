@@ -7,7 +7,6 @@ package io.radev.roman.domain.model
  */
 
 sealed class NetworkStatus {
-    object InProgress : NetworkStatus()
     object Success : NetworkStatus()
     object NetworkError : NetworkStatus()
     data class ApiError(val message: String) : NetworkStatus()
