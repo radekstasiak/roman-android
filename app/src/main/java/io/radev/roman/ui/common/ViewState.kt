@@ -15,7 +15,7 @@ sealed class ViewState<out T : Any> : IViewState {
     object Loading : ViewState<Nothing>()
     data class Loaded<T : Any>(val uiModel: T) : ViewState<T>()
     object NoNetwork : ViewState<Nothing>()
-    data class NetworkError(val message: String) : ViewState<Nothing>()
+    data class ApiError(val message: String) : ViewState<Nothing>()
     data class Error(val message: String) : ViewState<Nothing>()
 }
 

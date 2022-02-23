@@ -50,9 +50,9 @@ fun PlacesScreen(
             onPlaceSelected = onPlaceSelected
         )
         ViewState.NoNetwork -> NoNetworkScreen(onRetryClicked = onRetryClicked)
-        is ViewState.NetworkError -> NetworkErrorScreen(
+        is ViewState.ApiError -> NetworkErrorScreen(
             modifier = modifier,
-            message = (uiState as ViewState.NetworkError).message,
+            message = (uiState as ViewState.ApiError).message,
             onRetryClicked = onRetryClicked
         )
         is ViewState.Error -> ErrorScreen(
