@@ -8,8 +8,7 @@ import io.radev.roman.domain.model.NetworkStatus
 import io.radev.roman.network.model.PlaceEntity
 import io.radev.roman.ui.common.ViewState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -25,14 +24,7 @@ class PlacesViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ViewState<List<PlaceUiModel>>>(ViewState.Empty)
-
-    // UI state exposed to the UI
-    val uiState = _uiState
-        .stateIn(
-            viewModelScope,
-            SharingStarted.Eagerly,
-            _uiState.value
-        )
+    val uiState: StateFlow<ViewState<List<PlaceUiModel>>> = _uiState
 
     fun getPlaces(
         category: String = "restaurants",
@@ -43,16 +35,15 @@ class PlacesViewModel(
         viewModelScope.launch(dispatcher.IO) {
             kotlin.runCatching { getPlacesUseCase.getPlaces(category, lat, lon) }
                 .onSuccess { domainResponse ->
-                    _uiState.update {
-                        when (domainResponse.networkStatus) {
-                            NetworkStatus.Success -> ViewState.Loaded(domainResponse.results
-                                .filter { it.geocodes?.main != null }
-                                .map { it.toPlaceUiModel() })
-                            is NetworkStatus.ApiError -> ViewState.NetworkError(message = domainResponse.networkStatus.message)
-                            NetworkStatus.NetworkError -> ViewState.NoNetwork
-                            is NetworkStatus.UnknownError -> ViewState.Error(domainResponse.networkStatus.message)
-                        }
+                    val result = when (domainResponse.networkStatus) {
+                        is NetworkStatus.Success -> ViewState.Loaded(domainResponse.results
+                            .filter { it.geocodes?.main != null }
+                            .map { it.toPlaceUiModel() })
+                        is NetworkStatus.ApiError -> ViewState.ApiError(message = domainResponse.networkStatus.message)
+                        is NetworkStatus.NetworkError -> ViewState.NoNetwork
+                        is NetworkStatus.UnknownError -> ViewState.Error(domainResponse.networkStatus.message)
                     }
+                    _uiState.update { result }
                 }
                 .onFailure { exception ->
                     _uiState.update { ViewState.Error(exception.message ?: "") }
@@ -74,7 +65,7 @@ data class PlaceUiModel(
 fun PlaceEntity.toPlaceUiModel(): PlaceUiModel = PlaceUiModel(
     name = this.name ?: "",
     address = this.location?.formattedAddress ?: "",
-    icon = if (this.categories.isNotEmpty()) "${this.categories[0].icon?.prefix} + ${this.categories[0].icon?.suffix}" else "",
+    icon = if (this.categories.isNotEmpty()) "${this.categories[0].icon?.prefix}${this.categories[0].icon?.suffix}" else "",
     lon = this.geocodes?.main?.longitude ?: 0.0,
     lat = this.geocodes?.main?.latitude ?: 0.0,
 )

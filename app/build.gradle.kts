@@ -113,6 +113,7 @@ dependencies {
     testImplementation(TestLibraries.mockk)
     testImplementation(TestLibraries.kotlinCoroutinesTest)
     testImplementation(TestLibraries.coreTesting)
+    testImplementation(TestLibraries.turbine)
 
     androidTestImplementation(TestLibraries.extJunit)
     // UI Tests
