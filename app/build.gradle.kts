@@ -4,6 +4,7 @@ plugins {
     id(BuildPlugins.firebaseAppDistributionPlugin)
     id(BuildPlugins.kotlinKapt)
 //    id(BuildPlugins.hiltAndroidPlugin)
+    kotlin(BuildPlugins.serializationPlugin) version BuildPlugins.Versions.kotlinSerializationPlugin
 }
 
 android {
@@ -84,7 +85,7 @@ dependencies {
     implementation(Libraries.ktor)
     implementation(Libraries.ktorAndroid)
     implementation(Libraries.ktorLogging)
-    implementation(Libraries.ktorGson)
+    implementation(Libraries.ktorKotlinXSerialization)
     implementation(Libraries.logbackClassics)
     implementation(platform(Libraries.firebaseBom))
     implementation(Libraries.firebaseAnalytics)

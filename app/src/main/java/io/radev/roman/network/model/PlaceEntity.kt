@@ -1,6 +1,8 @@
 package io.radev.roman.network.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 
 /*
  * Created by Radoslaw on 20/02/2022.
@@ -8,56 +10,66 @@ import com.google.gson.annotations.SerializedName
  * Peace and Love.
  */
 
+@Serializable
 data class PlaceEntity(
-    @SerializedName("fsq_id") var fsqId: String? = null,
-    @SerializedName("categories") var categories: ArrayList<Categories> = arrayListOf(),
-    @SerializedName("chains") var chains: ArrayList<String> = arrayListOf(),
-    @SerializedName("distance") var distance: Int? = null,
-    @SerializedName("geocodes") var geocodes: Geocodes? = Geocodes(),
-    @SerializedName("location") var location: Location? = Location(),
-    @SerializedName("name") var name: String? = null,
-    @SerializedName("related_places") var relatedPlaces: RelatedPlaces? = RelatedPlaces(),
-    @SerializedName("timezone") var timezone: String? = null
+    @SerialName("fsq_id") var fsqId: String? = null,
+    @SerialName("categories") var categories: ArrayList<Categories> = arrayListOf(),
+    @SerialName("chains") var chains: ArrayList<String> = arrayListOf(),
+    @SerialName("distance") var distance: Int? = null,
+    @SerialName("geocodes") var geocodes: Geocodes? = Geocodes(),
+    @SerialName("location") var location: Location? = Location(),
+    @SerialName("name") var name: String? = null,
+    @SerialName("related_places") var relatedPlaces: RelatedPlaces? = RelatedPlaces(),
+    @SerialName("timezone") var timezone: String? = null
 ) {
+    @Serializable
     data class Categories(
-        @SerializedName("id") var id: Int? = null,
-        @SerializedName("name") var name: String? = null,
-        @SerializedName("icon") var icon: Icon? = Icon()
+        @SerialName("id") var id: Int? = null,
+        @SerialName("name") var name: String? = null,
+        @SerialName("icon") var icon: Icon? = Icon()
     )
 
+    @Serializable
     data class Icon(
-        @SerializedName("prefix") var prefix: String? = null,
-        @SerializedName("suffix") var suffix: String? = null
+        @SerialName("prefix") var prefix: String? = null,
+        @SerialName("suffix") var suffix: String? = null
     )
 
+    @Serializable
     data class Geocodes(
-        @SerializedName("main") var main: Main? = Main()
+        @SerialName("main") var main: Main? = Main()
     ) {
+
+        @Serializable
         data class Main(
-            @SerializedName("latitude") var latitude: Double? = null,
-            @SerializedName("longitude") var longitude: Double? = null
+            @SerialName("latitude") var latitude: Double? = null,
+            @SerialName("longitude") var longitude: Double? = null
         )
     }
 
+    @Serializable
     data class Location(
-        @SerializedName("address") var address: String? = null,
-        @SerializedName("admin_region") var adminRegion: String? = null,
-        @SerializedName("country") var country: String? = null,
-        @SerializedName("cross_street") var crossStreet: String? = null,
-        @SerializedName("formatted_address") var formattedAddress: String? = null,
-        @SerializedName("locality") var locality: String? = null,
-        @SerializedName("neighborhood") var neighborhood: ArrayList<String> = arrayListOf(),
-        @SerializedName("post_town") var postTown: String? = null,
-        @SerializedName("postcode") var postcode: String? = null,
-        @SerializedName("region") var region: String? = null
+        @SerialName("address") var address: String? = null,
+        @SerialName("admin_region") var adminRegion: String? = null,
+        @SerialName("country") var country: String? = null,
+        @SerialName("cross_street") var crossStreet: String? = null,
+        @SerialName("formatted_address") var formattedAddress: String? = null,
+        @SerialName("locality") var locality: String? = null,
+        @SerialName("neighborhood") var neighborhood: ArrayList<String> = arrayListOf(),
+        @SerialName("post_town") var postTown: String? = null,
+        @SerialName("postcode") var postcode: String? = null,
+        @SerialName("region") var region: String? = null
     )
 
+    @Serializable
     data class RelatedPlaces(
-        @SerializedName("children") var children: ArrayList<Children> = arrayListOf()
+        @SerialName("children") var children: ArrayList<Children> = arrayListOf()
     ) {
+
+        @Serializable
         data class Children(
-            @SerializedName("fsq_id") var fsqId: String? = null,
-            @SerializedName("name") var name: String? = null
+            @SerialName("fsq_id") var fsqId: String? = null,
+            @SerialName("name") var name: String? = null
         )
     }
 

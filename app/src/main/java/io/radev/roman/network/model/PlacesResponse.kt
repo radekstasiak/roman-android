@@ -1,6 +1,7 @@
 package io.radev.roman.network.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /*
  * Created by Radoslaw on 19/02/2022.
@@ -8,7 +9,8 @@ import com.google.gson.annotations.SerializedName
  * Peace and Love.
  */
 
-class PlacesResponse {
-    @SerializedName("results")
+@Serializable
+data class PlacesResponse(
+    @SerialName("results")
     val results: List<PlaceEntity> = listOf()
-}
+)

@@ -1,7 +1,7 @@
 const val kotlinVersion = "1.5.31"
 
 object CommonVersions {
-    const val ktor = "1.6.7"
+    const val ktor = "1.6.8"
 }
 
 object BuildPlugins {
@@ -12,6 +12,7 @@ object BuildPlugins {
         const val firebaseAppDistribution = "2.2.0"
         const val hiltGradle = "2.38.1"
         const val kotlinCompilerExtensionVersion = "1.0.5"
+        const val kotlinSerializationPlugin = "1.6.10"
     }
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
@@ -26,6 +27,7 @@ object BuildPlugins {
     const val firebaseAppDistributionPlugin = "com.google.firebase.appdistribution"
     const val kotlinKapt = "kotlin-kapt"
     const val hiltAndroidPlugin = "dagger.hilt.android.plugin"
+    const val serializationPlugin = "plugin.serialization"
 
 }
 
@@ -62,7 +64,7 @@ object Libraries {
     const val ktor = "io.ktor:ktor-client-core:${CommonVersions.ktor}"
     const val ktorAndroid = "io.ktor:ktor-client-android:${CommonVersions.ktor}"
     const val ktorLogging = "io.ktor:ktor-client-logging:${CommonVersions.ktor}"
-    const val ktorGson = "io.ktor:ktor-client-gson:${CommonVersions.ktor}"
+    const val ktorKotlinXSerialization = "io.ktor:ktor-client-serialization:${CommonVersions.ktor}"
     const val logbackClassics = "ch.qos.logback:logback-classic:${Versions.logbackClassics}"
     const val koin = "io.insert-koin:koin-android:${Versions.koin}"
 
