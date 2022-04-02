@@ -29,6 +29,11 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+//                implementation(TestLibraries.junit)
+//                implementation(TestLibraries.ktor)
+//                implementation(TestLibraries.mockk)
+//                implementation(TestLibraries.kotlinCoroutinesTest)
+//                implementation(TestLibraries.coreTesting)
             }
         }
         val androidMain by getting {

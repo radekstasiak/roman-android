@@ -20,7 +20,7 @@ import io.ktor.http.*
 class ApiClient(
     private val apiKey: String
 ) {
-    //TODO injectt engine depending on the platform implementation
+    //TODO inject engine depending on the platform implementation
     val httpClient = HttpClient() {
         install(Logging) {
             logger = Logger.DEFAULT

@@ -30,7 +30,7 @@ class PlacesServiceTest {
         }
 
         val apiClient = io.radev.shared.network.ApiClient(
-            engine = mockEngine,
+//            engine = mockEngine,
             apiKey = "apiKey"
         )
 

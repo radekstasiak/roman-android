@@ -37,11 +37,11 @@ class PlacesRepositoryTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        mockkStatic("io.radev.roman.network.NetworkResponseKt")
+        mockkStatic("io.radev.shared.network.NetworkResponseKt")
         Dispatchers.setMain(mainThreadSurrogate)
         repository = PlacesRepositoryImpl(
             placesService = service,
-            dispatcher = dispatcher
+//            dispatcher = dispatcher
         )
         every { dispatcher.IO } returns mainThreadSurrogate
 
@@ -70,7 +70,7 @@ class PlacesRepositoryTest {
         val result = repository.getPlaces(category = "cat", lat = "lat", lon = "lon")
         Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.Success)
         Assert.assertEquals(placesResponseMock, (result as io.radev.shared.network.NetworkResponse.Success).body)
-        verify { dispatcher.IO }
+//        verify { dispatcher.IO }
     }
 
     @Test
@@ -92,7 +92,7 @@ class PlacesRepositoryTest {
         val result = repository.getPlaces(category = "cat", lat = "lat", lon = "lon")
         Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.UnknownError)
         Assert.assertEquals(exceptionMockk, (result as io.radev.shared.network.NetworkResponse.UnknownError).error)
-        verify { dispatcher.IO }
+//        verify { dispatcher.IO }
     }
 
 }
