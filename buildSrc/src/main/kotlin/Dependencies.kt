@@ -1,4 +1,4 @@
-const val kotlinVersion = "1.5.31"
+const val kotlinVersion = "1.6.10"
 
 object CommonVersions {
     const val ktor = "1.6.8"
@@ -13,8 +13,8 @@ object BuildPlugins {
         const val googleServices = "4.3.10"
         const val firebaseAppDistribution = "2.2.0"
         const val hiltGradle = "2.38.1"
-        const val kotlinCompilerExtensionVersion = "1.0.5"
-        const val kotlinSerializationPlugin = "1.6.10"
+        const val kotlinCompilerExtensionVersion = "1.1.1"
+        const val kotlinSerializationPlugin = "1.6.20"
     }
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"

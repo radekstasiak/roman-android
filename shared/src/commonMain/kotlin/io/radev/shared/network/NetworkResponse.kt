@@ -1,8 +1,6 @@
 package io.radev.shared.network
 
 import io.ktor.client.features.*
-import java.io.IOException
-import java.net.UnknownHostException
 
 /*
  * Created by Radoslaw on 19/02/2022.
@@ -24,7 +22,7 @@ sealed class NetworkResponse<out T : Any, out U : Any> {
     /**
      * Network error
      */
-    data class NetworkError(val error: IOException) : NetworkResponse<Nothing, Nothing>()
+    data class NetworkError(val error: Exception) : NetworkResponse<Nothing, Nothing>()
 
     /**
      * For example, json parsing error
@@ -32,6 +30,7 @@ sealed class NetworkResponse<out T : Any, out U : Any> {
     data class UnknownError(val error: Throwable?) : NetworkResponse<Nothing, Nothing>()
 }
 
+//TODO expect/actual platform implementation to support java exceptions on Android
 fun Throwable.toNetworkResponse() = when (this) {
     is ServerResponseException -> NetworkResponse.UnknownError(error = this)
     is ClientRequestException -> NetworkResponse.ApiError(
@@ -39,7 +38,7 @@ fun Throwable.toNetworkResponse() = when (this) {
         code = this.response.status.value
     )
     is RedirectResponseException -> NetworkResponse.UnknownError(error = this)
-    is IOException -> NetworkResponse.NetworkError(error = this)
-    is UnknownHostException -> NetworkResponse.NetworkError(error = this)
+//    is IOException -> NetworkResponse.NetworkError(error = this)
+//    is UnknownHostException -> NetworkResponse.NetworkError(error = this)
     else -> NetworkResponse.UnknownError(error = this)
 }

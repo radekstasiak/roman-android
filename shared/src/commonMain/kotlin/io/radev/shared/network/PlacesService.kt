@@ -1,6 +1,7 @@
 package io.radev.shared.network
 
 import io.ktor.client.request.*
+import io.ktor.util.*
 import io.radev.shared.network.HttpRoutes.GET_PLACES
 import io.radev.shared.network.model.PlacesResponse
 
@@ -10,6 +11,7 @@ import io.radev.shared.network.model.PlacesResponse
  * Peace and Love.
  */
 
+@InternalAPI
 class PlacesServiceImpl(
     private val apiClient: ApiClient
 ) : PlacesService {

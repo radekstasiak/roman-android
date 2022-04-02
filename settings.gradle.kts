@@ -5,6 +5,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "roman-app"
+rootProject.name = "iosApp-app"
 include(":app")
 include(":shared")
