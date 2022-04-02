@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
  * Peace and Love.
  */
 
+//TODO migrate to KMM
 class CoroutineDispatcher {
 
     val Default = Dispatchers.Default

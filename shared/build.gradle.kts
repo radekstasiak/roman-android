@@ -20,9 +20,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Libraries.ktor)
-                implementation(Libraries.ktorLogging)
-                implementation(Libraries.ktorKotlinXSerialization)
+                implementation(CommonLibraries.ktor)
+                implementation(CommonLibraries.ktorLogging)
+                implementation(CommonLibraries.ktorKotlinXSerialization)
+                implementation(CommonLibraries.kotlinCoroutinesCore)
             }
         }
         val commonTest by getting {
@@ -32,6 +33,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation(Libraries.kotlinCoroutinesAndroid)
                 implementation(Libraries.ktorAndroid)
             }
         }

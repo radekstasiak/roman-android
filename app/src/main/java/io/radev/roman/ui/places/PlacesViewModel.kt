@@ -3,10 +3,9 @@ package io.radev.roman.ui.places
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.radev.roman.CoroutineDispatcher
-import io.radev.roman.domain.GetPlacesUseCase
-import io.radev.roman.domain.model.NetworkStatus
-import io.radev.shared.network.model.PlaceEntity
 import io.radev.roman.ui.common.ViewState
+import io.radev.shared.domain.GetPlacesUseCase
+import io.radev.shared.domain.model.NetworkStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -39,9 +38,9 @@ class PlacesViewModel(
                         is NetworkStatus.Success -> ViewState.Loaded(domainResponse.results
                             .filter { it.geocodes?.main != null }
                             .map { it.toPlaceUiModel() })
-                        is NetworkStatus.ApiError -> ViewState.ApiError(message = domainResponse.networkStatus.message)
+                        is NetworkStatus.ApiError -> ViewState.ApiError(message = (domainResponse.networkStatus as NetworkStatus.ApiError).message)
                         is NetworkStatus.NetworkError -> ViewState.NoNetwork
-                        is NetworkStatus.UnknownError -> ViewState.Error(domainResponse.networkStatus.message)
+                        is NetworkStatus.UnknownError -> ViewState.Error((domainResponse.networkStatus as NetworkStatus.UnknownError).message)
                     }
                     _uiState.update { result }
                 }

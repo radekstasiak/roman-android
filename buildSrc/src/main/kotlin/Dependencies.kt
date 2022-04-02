@@ -2,6 +2,8 @@ const val kotlinVersion = "1.5.31"
 
 object CommonVersions {
     const val ktor = "1.6.8"
+    const val kotlinCoroutinesVersion = "1.6.0"
+
 }
 
 object BuildPlugins {
@@ -62,14 +64,12 @@ object Libraries {
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics"
     const val kaptHilt = "com.google.dagger:hilt-compiler:${Versions.hilt}"
-    const val ktor = "io.ktor:ktor-client-core:${CommonVersions.ktor}"
     const val ktorAndroid = "io.ktor:ktor-client-android:${CommonVersions.ktor}"
     const val ktorIOS = "io.ktor:ktor-client-ios:${CommonVersions.ktor}"
-    const val ktorLogging = "io.ktor:ktor-client-logging:${CommonVersions.ktor}"
-    const val ktorKotlinXSerialization = "io.ktor:ktor-client-serialization:${CommonVersions.ktor}"
     const val logbackClassics = "ch.qos.logback:logback-classic:${Versions.logbackClassics}"
     const val koin = "io.insert-koin:koin-android:${Versions.koin}"
-
+    const val kotlinCoroutinesAndroid =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${CommonVersions.kotlinCoroutinesVersion}"
 
     object Compose {
         private object Versions {
@@ -133,4 +133,17 @@ object TestLibraries {
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutinesTest}"
     const val coreTesting = "android.arch.core:core-testing:${Versions.coreTesting}"
     const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
+}
+
+object CommonLibraries {
+
+    private object Versions {
+    }
+
+    const val kotlinCoroutinesCore =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:$${CommonVersions.kotlinCoroutinesVersion}"
+    const val ktor = "io.ktor:ktor-client-core:${CommonVersions.ktor}"
+    const val ktorLogging = "io.ktor:ktor-client-logging:${CommonVersions.ktor}"
+    const val ktorKotlinXSerialization = "io.ktor:ktor-client-serialization:${CommonVersions.ktor}"
+
 }

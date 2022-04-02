@@ -3,9 +3,8 @@ package io.radev.roman.data
 import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
 import io.radev.roman.CoroutineDispatcher
-import io.radev.shared.network.NetworkResponse
-import io.radev.shared.network.PlacesService
-import io.radev.shared.network.model.PlacesResponse
+import io.radev.shared.data.PlacesRepository
+import io.radev.shared.data.PlacesRepositoryImpl
 import io.radev.shared.network.toNetworkResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext

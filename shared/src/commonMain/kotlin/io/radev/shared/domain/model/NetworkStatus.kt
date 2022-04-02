@@ -1,4 +1,4 @@
-package io.radev.roman.domain.model
+package io.radev.shared.domain.model
 
 /*
  * Created by Radoslaw on 21/02/2022.

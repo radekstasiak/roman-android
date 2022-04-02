@@ -3,10 +3,10 @@ package io.radev.roman.domain
 import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
 import io.radev.roman.CoroutineDispatcher
-import io.radev.roman.data.PlacesRepository
-import io.radev.roman.domain.model.NetworkStatus
-import io.radev.shared.network.NetworkResponse
-import io.radev.shared.network.model.PlacesResponse
+import io.radev.shared.data.PlacesRepository
+import io.radev.shared.domain.model.NetworkStatus
+import io.radev.shared.domain.GetPlacesUseCase
+import io.radev.shared.domain.GetPlacesUseCaseImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain

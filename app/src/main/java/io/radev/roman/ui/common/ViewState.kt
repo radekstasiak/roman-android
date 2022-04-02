@@ -1,6 +1,6 @@
 package io.radev.roman.ui.common
 
-import io.radev.roman.domain.model.NetworkStatus
+import io.radev.shared.domain.model.NetworkStatus
 
 /*
  * Created by Radoslaw on 21/02/2022.

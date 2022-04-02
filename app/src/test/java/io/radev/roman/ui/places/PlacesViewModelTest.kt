@@ -8,10 +8,9 @@ import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.radev.roman.CoroutineDispatcher
-import io.radev.roman.domain.GetPlacesDomainModel
-import io.radev.roman.domain.GetPlacesUseCase
-import io.radev.roman.domain.model.NetworkStatus
-import io.radev.shared.network.model.PlaceEntity
+import io.radev.shared.domain.GetPlacesDomainModel
+import io.radev.shared.domain.GetPlacesUseCase
+import io.radev.shared.domain.model.NetworkStatus
 import io.radev.roman.ui.common.ViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
