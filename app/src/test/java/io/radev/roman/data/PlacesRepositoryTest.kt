@@ -3,10 +3,10 @@ package io.radev.roman.data
 import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
 import io.radev.roman.CoroutineDispatcher
-import io.radev.roman.network.NetworkResponse
-import io.radev.roman.network.PlacesService
-import io.radev.roman.network.model.PlacesResponse
-import io.radev.roman.network.toNetworkResponse
+import io.radev.shared.network.NetworkResponse
+import io.radev.shared.network.PlacesService
+import io.radev.shared.network.model.PlacesResponse
+import io.radev.shared.network.toNetworkResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
@@ -29,7 +29,7 @@ class PlacesRepositoryTest {
     lateinit var repository: PlacesRepository
 
     @RelaxedMockK
-    lateinit var service: PlacesService
+    lateinit var service: io.radev.shared.network.PlacesService
 
     @RelaxedMockK
     lateinit var dispatcher: CoroutineDispatcher
@@ -57,7 +57,7 @@ class PlacesRepositoryTest {
     @Test
     fun `when user gets places then successful response is returned correctly`() = runTest {
         //Given
-        val placesResponseMock = mockk<PlacesResponse>(relaxed = true)
+        val placesResponseMock = mockk<io.radev.shared.network.model.PlacesResponse>(relaxed = true)
 
         coEvery {
             service.getPlaces(
@@ -69,8 +69,8 @@ class PlacesRepositoryTest {
 
         //When
         val result = repository.getPlaces(category = "cat", lat = "lat", lon = "lon")
-        Assert.assertTrue(result is NetworkResponse.Success)
-        Assert.assertEquals(placesResponseMock, (result as NetworkResponse.Success).body)
+        Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.Success)
+        Assert.assertEquals(placesResponseMock, (result as io.radev.shared.network.NetworkResponse.Success).body)
         verify { dispatcher.IO }
     }
 
@@ -86,13 +86,13 @@ class PlacesRepositoryTest {
             )
         } throws exceptionMockk
 
-        every { exceptionMockk.toNetworkResponse() } returns NetworkResponse.UnknownError(
+        every { exceptionMockk.toNetworkResponse() } returns io.radev.shared.network.NetworkResponse.UnknownError(
             exceptionMockk
         )
         //When
         val result = repository.getPlaces(category = "cat", lat = "lat", lon = "lon")
-        Assert.assertTrue(result is NetworkResponse.UnknownError)
-        Assert.assertEquals(exceptionMockk, (result as NetworkResponse.UnknownError).error)
+        Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.UnknownError)
+        Assert.assertEquals(exceptionMockk, (result as io.radev.shared.network.NetworkResponse.UnknownError).error)
         verify { dispatcher.IO }
     }
 

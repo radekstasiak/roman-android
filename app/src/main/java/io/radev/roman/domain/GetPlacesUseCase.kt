@@ -3,9 +3,9 @@ package io.radev.roman.domain
 import io.radev.roman.CoroutineDispatcher
 import io.radev.roman.data.PlacesRepository
 import io.radev.roman.domain.model.NetworkStatus
-import io.radev.roman.network.NetworkResponse
-import io.radev.roman.network.model.PlaceEntity
 import kotlinx.coroutines.withContext
+import io.radev.shared.network.*
+import io.radev.shared.network.model.PlaceEntity
 
 /*
  * Created by Radoslaw on 20/02/2022.

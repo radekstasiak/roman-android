@@ -11,7 +11,7 @@ import io.radev.roman.CoroutineDispatcher
 import io.radev.roman.domain.GetPlacesDomainModel
 import io.radev.roman.domain.GetPlacesUseCase
 import io.radev.roman.domain.model.NetworkStatus
-import io.radev.roman.network.model.PlaceEntity
+import io.radev.shared.network.model.PlaceEntity
 import io.radev.roman.ui.common.ViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -70,7 +70,7 @@ class PlacesViewModelTest {
 
             val mockkDomainResponseModel = mockk<GetPlacesDomainModel>(relaxed = true) {
                 every { networkStatus } returns mockk<NetworkStatus.Success>(relaxed = true) {
-                    every { results } returns listOf(mockk<PlaceEntity>(relaxed = true) {
+                    every { results } returns listOf(mockk<io.radev.shared.network.model.PlaceEntity>(relaxed = true) {
                         every { geocodes?.main } returns mockk(relaxed = true)
                     })
                 }
@@ -256,19 +256,19 @@ class PlacesViewModelTest {
 
     @Test
     fun `test toPlaceUiModel maps PlaceEntit to PlaceModelUi correctly`() {
-        val placeEntity = PlaceEntity(
+        val placeEntity = io.radev.shared.network.model.PlaceEntity(
             name = "Name",
-            location = PlaceEntity.Location(formattedAddress = "Formatted address"),
+            location = io.radev.shared.network.model.PlaceEntity.Location(formattedAddress = "Formatted address"),
             categories = arrayListOf(
-                PlaceEntity.Categories(
-                    icon = PlaceEntity.Icon(
+                io.radev.shared.network.model.PlaceEntity.Categories(
+                    icon = io.radev.shared.network.model.PlaceEntity.Icon(
                         prefix = "prefix_",
                         suffix = "suffix"
                     )
                 )
             ),
-            geocodes = PlaceEntity.Geocodes(
-                main = PlaceEntity.Geocodes.Main(
+            geocodes = io.radev.shared.network.model.PlaceEntity.Geocodes(
+                main = io.radev.shared.network.model.PlaceEntity.Geocodes.Main(
                     latitude = 1.0,
                     longitude = 2.0
                 )

@@ -28,7 +28,8 @@ object BuildPlugins {
     const val kotlinKapt = "kotlin-kapt"
     const val hiltAndroidPlugin = "dagger.hilt.android.plugin"
     const val serializationPlugin = "plugin.serialization"
-
+    const val multiplatformPlugin = "multiplatform"
+    const val androidLibrary = "com.android.library"
 }
 
 object AndroidSdk {
@@ -63,6 +64,7 @@ object Libraries {
     const val kaptHilt = "com.google.dagger:hilt-compiler:${Versions.hilt}"
     const val ktor = "io.ktor:ktor-client-core:${CommonVersions.ktor}"
     const val ktorAndroid = "io.ktor:ktor-client-android:${CommonVersions.ktor}"
+    const val ktorIOS = "io.ktor:ktor-client-ios:${CommonVersions.ktor}"
     const val ktorLogging = "io.ktor:ktor-client-logging:${CommonVersions.ktor}"
     const val ktorKotlinXSerialization = "io.ktor:ktor-client-serialization:${CommonVersions.ktor}"
     const val logbackClassics = "ch.qos.logback:logback-classic:${Versions.logbackClassics}"

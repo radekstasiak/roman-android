@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import io.radev.roman.CoroutineDispatcher
 import io.radev.roman.domain.GetPlacesUseCase
 import io.radev.roman.domain.model.NetworkStatus
-import io.radev.roman.network.model.PlaceEntity
+import io.radev.shared.network.model.PlaceEntity
 import io.radev.roman.ui.common.ViewState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -62,7 +62,7 @@ data class PlaceUiModel(
 )
 
 
-fun PlaceEntity.toPlaceUiModel(): PlaceUiModel = PlaceUiModel(
+fun io.radev.shared.network.model.PlaceEntity.toPlaceUiModel(): PlaceUiModel = PlaceUiModel(
     name = this.name ?: "",
     address = this.location?.formattedAddress ?: "",
     icon = if (this.categories.isNotEmpty()) "${this.categories[0].icon?.prefix}${this.categories[0].icon?.suffix}" else "",

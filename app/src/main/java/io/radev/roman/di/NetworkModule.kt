@@ -1,10 +1,6 @@
 package io.radev.roman.di
 
-import io.ktor.client.engine.android.*
 import io.radev.roman.R
-import io.radev.roman.network.ApiClient
-import io.radev.roman.network.PlacesService
-import io.radev.roman.network.PlacesServiceImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -17,11 +13,10 @@ import org.koin.dsl.module
 
 val networkModule = module {
     single {
-        ApiClient(
-            engine = Android.create(),
+        io.radev.shared.network.ApiClient(
             apiKey = androidContext().resources.getString(R.string.FOURSQUARE_API_KEY)
         )
     }
-    single { PlacesServiceImpl(get()) } bind PlacesService::class
+    single { io.radev.shared.network.PlacesServiceImpl(get()) } bind io.radev.shared.network.PlacesService::class
 }
 

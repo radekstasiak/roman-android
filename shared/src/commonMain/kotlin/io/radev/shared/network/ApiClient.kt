@@ -1,4 +1,4 @@
-package io.radev.roman.network
+package io.radev.shared.network
 
 import android.util.Log
 import io.ktor.client.*
@@ -18,11 +18,10 @@ import io.ktor.http.*
  */
 
 class ApiClient(
-    private val engine: HttpClientEngine,
     private val apiKey: String
 ) {
 
-    val httpClient = HttpClient(engine) {
+    val httpClient = HttpClient() {
         install(Logging) {
             logger = Logger.DEFAULT
             level = LogLevel.HEADERS

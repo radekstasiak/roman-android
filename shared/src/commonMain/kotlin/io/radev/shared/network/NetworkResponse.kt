@@ -1,4 +1,4 @@
-package io.radev.roman.network
+package io.radev.shared.network
 
 import io.ktor.client.features.*
 import java.io.IOException

@@ -1,8 +1,8 @@
-package io.radev.roman.network
+package io.radev.shared.network
 
 import io.ktor.client.request.*
-import io.radev.roman.network.HttpRoutes.GET_PLACES
-import io.radev.roman.network.model.PlacesResponse
+import io.radev.shared.network.HttpRoutes.GET_PLACES
+import io.radev.shared.network.model.PlacesResponse
 
 /*
  * Created by Radoslaw on 19/02/2022.

@@ -5,8 +5,8 @@ import io.mockk.impl.annotations.RelaxedMockK
 import io.radev.roman.CoroutineDispatcher
 import io.radev.roman.data.PlacesRepository
 import io.radev.roman.domain.model.NetworkStatus
-import io.radev.roman.network.NetworkResponse
-import io.radev.roman.network.model.PlacesResponse
+import io.radev.shared.network.NetworkResponse
+import io.radev.shared.network.model.PlacesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
@@ -56,9 +56,9 @@ class GetPlacesUseCaseTest {
             val category = "cat"
             val lat = "lat"
             val lon = "lon"
-            val mockkPlacesResponse = mockk<PlacesResponse>(relaxed = true)
+            val mockkPlacesResponse = mockk<io.radev.shared.network.model.PlacesResponse>(relaxed = true)
             val mockkNetworkResponse =
-                mockk<NetworkResponse.Success<PlacesResponse>>(relaxed = true) {
+                mockk<io.radev.shared.network.NetworkResponse.Success<io.radev.shared.network.model.PlacesResponse>>(relaxed = true) {
                     every { body } returns mockkPlacesResponse
                     every { body.results } returns listOf(
                         mockk(relaxed = true),
@@ -91,7 +91,7 @@ class GetPlacesUseCaseTest {
             val lat = "lat"
             val lon = "lon"
             val responseErrorMsg = "error message"
-            val mockkNetworkResponse = mockk<NetworkResponse.ApiError>(relaxed = true) {
+            val mockkNetworkResponse = mockk<io.radev.shared.network.NetworkResponse.ApiError>(relaxed = true) {
                 every { error?.toString() } returns responseErrorMsg
             }
 
@@ -123,7 +123,7 @@ class GetPlacesUseCaseTest {
             val category = "cat"
             val lat = "lat"
             val lon = "lon"
-            val mockkNetworkResponse = mockk<NetworkResponse.NetworkError>(relaxed = true)
+            val mockkNetworkResponse = mockk<io.radev.shared.network.NetworkResponse.NetworkError>(relaxed = true)
 
             //When
             coEvery {
@@ -150,7 +150,7 @@ class GetPlacesUseCaseTest {
             val lat = "lat"
             val lon = "lon"
             val responseErrorMsg = "error message"
-            val mockkNetworkResponse = mockk<NetworkResponse.UnknownError>(relaxed = true) {
+            val mockkNetworkResponse = mockk<io.radev.shared.network.NetworkResponse.UnknownError>(relaxed = true) {
                 every { error?.toString() } returns responseErrorMsg
             }
 

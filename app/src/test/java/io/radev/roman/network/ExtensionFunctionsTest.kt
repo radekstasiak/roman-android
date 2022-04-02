@@ -4,6 +4,7 @@ import io.ktor.client.features.*
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk
+import io.radev.shared.network.toNetworkResponse
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -32,8 +33,8 @@ class ExtensionFunctionsTest {
         val result = exceptionMock.toNetworkResponse()
 
         //Then
-        Assert.assertTrue(result is NetworkResponse.UnknownError)
-        Assert.assertEquals(exceptionMock, (result as NetworkResponse.UnknownError).error)
+        Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.UnknownError)
+        Assert.assertEquals(exceptionMock, (result as io.radev.shared.network.NetworkResponse.UnknownError).error)
     }
 
     @Test
@@ -47,9 +48,9 @@ class ExtensionFunctionsTest {
         val result = exceptionMock.toNetworkResponse()
 
         //Then
-        Assert.assertTrue(result is NetworkResponse.ApiError)
-        Assert.assertEquals(422, (result as NetworkResponse.ApiError).code)
-        Assert.assertEquals(exceptionMock, (result as NetworkResponse.ApiError).error)
+        Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.ApiError)
+        Assert.assertEquals(422, (result as io.radev.shared.network.NetworkResponse.ApiError).code)
+        Assert.assertEquals(exceptionMock, (result as io.radev.shared.network.NetworkResponse.ApiError).error)
     }
 
     @Test
@@ -61,8 +62,8 @@ class ExtensionFunctionsTest {
         val result = exceptionMock.toNetworkResponse()
 
         //Then
-        Assert.assertTrue(result is NetworkResponse.UnknownError)
-        Assert.assertEquals(exceptionMock, (result as NetworkResponse.UnknownError).error)
+        Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.UnknownError)
+        Assert.assertEquals(exceptionMock, (result as io.radev.shared.network.NetworkResponse.UnknownError).error)
     }
 
     @Test
@@ -74,8 +75,8 @@ class ExtensionFunctionsTest {
         val result = exceptionMock.toNetworkResponse()
 
         //Then
-        Assert.assertTrue(result is NetworkResponse.NetworkError)
-        Assert.assertEquals(exceptionMock, (result as NetworkResponse.NetworkError).error)
+        Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.NetworkError)
+        Assert.assertEquals(exceptionMock, (result as io.radev.shared.network.NetworkResponse.NetworkError).error)
     }
 
     @Test
@@ -87,8 +88,8 @@ class ExtensionFunctionsTest {
         val result = exceptionMock.toNetworkResponse()
 
         //Then
-        Assert.assertTrue(result is NetworkResponse.NetworkError)
-        Assert.assertEquals(exceptionMock, (result as NetworkResponse.NetworkError).error)
+        Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.NetworkError)
+        Assert.assertEquals(exceptionMock, (result as io.radev.shared.network.NetworkResponse.NetworkError).error)
     }
 
     @Test
@@ -100,7 +101,7 @@ class ExtensionFunctionsTest {
         val result = exceptionMock.toNetworkResponse()
 
         //Then
-        Assert.assertTrue(result is NetworkResponse.UnknownError)
-        Assert.assertEquals(exceptionMock, (result as NetworkResponse.UnknownError).error)
+        Assert.assertTrue(result is io.radev.shared.network.NetworkResponse.UnknownError)
+        Assert.assertEquals(exceptionMock, (result as io.radev.shared.network.NetworkResponse.UnknownError).error)
     }
 }

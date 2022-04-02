@@ -4,7 +4,7 @@ plugins {
     id(BuildPlugins.firebaseAppDistributionPlugin)
     id(BuildPlugins.kotlinKapt)
 //    id(BuildPlugins.hiltAndroidPlugin)
-    kotlin(BuildPlugins.serializationPlugin) version BuildPlugins.Versions.kotlinSerializationPlugin
+//    kotlin(BuildPlugins.serializationPlugin) version BuildPlugins.Versions.kotlinSerializationPlugin
 }
 
 android {
@@ -74,6 +74,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":shared"))
     implementation(Libraries.ktxCore)
     implementation(Libraries.ktxLifecycleRuntime)
     implementation(Libraries.appCompat)
@@ -82,10 +83,10 @@ dependencies {
 //    implementation(Libraries.hiltAndroid)
 //    kapt(Libraries.kaptHilt)
     implementation(Libraries.koin)
-    implementation(Libraries.ktor)
-    implementation(Libraries.ktorAndroid)
-    implementation(Libraries.ktorLogging)
-    implementation(Libraries.ktorKotlinXSerialization)
+//    implementation(Libraries.ktor)
+//    implementation(Libraries.ktorAndroid)
+//    implementation(Libraries.ktorLogging)
+//    implementation(Libraries.ktorKotlinXSerialization)
     implementation(Libraries.logbackClassics)
     implementation(platform(Libraries.firebaseBom))
     implementation(Libraries.firebaseAnalytics)

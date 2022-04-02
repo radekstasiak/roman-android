@@ -1,4 +1,4 @@
-package io.radev.roman.network.model
+package io.radev.shared.network.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

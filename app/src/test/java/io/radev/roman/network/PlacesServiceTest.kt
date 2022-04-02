@@ -17,7 +17,7 @@ import org.junit.Test
 
 class PlacesServiceTest {
 
-    private lateinit var service: PlacesService
+    private lateinit var service: io.radev.shared.network.PlacesService
 
     @Before
     fun setup() {
@@ -29,12 +29,12 @@ class PlacesServiceTest {
             )
         }
 
-        val apiClient = ApiClient(
+        val apiClient = io.radev.shared.network.ApiClient(
             engine = mockEngine,
             apiKey = "apiKey"
         )
 
-        service = PlacesServiceImpl(apiClient = apiClient)
+        service = io.radev.shared.network.PlacesServiceImpl(apiClient = apiClient)
     }
 
     @Test
