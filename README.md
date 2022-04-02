@@ -13,3 +13,18 @@ to build the app first add new string resource `FOURSQUARE_API_KEY` - it can be 
 - display different type of places and activities using map
 - set alerts (notifications, calendar events) that reminds you about romantic gesture  
 - more tbd
+
+## known issues
+- test do not run from commonTest package
+	- https://kotlinlang.org/docs/multiplatform-run-tests.html
+	- no mocking native library..
+	    - potential solution is to test common code in android test
+		    - https://stackoverflow.com/questions/58320492/kotlin-multiplatform-how-to-mock-objects-in-a-unit-test-for-ios
+	    - or write own mocks like interface implementation...
+- implement multi threading
+	- https://kotlinlang.org/docs/multiplatform-mobile-concurrency-and-coroutines.html#multithreaded-coroutines
+	- https://medium.com/@carlosdmp/android-ios-kotlin-multiplatform-api-and-threading-17b17e84992f
+- use dependency injection in shared module
+    - https://johnoreilly.dev/posts/kotlinmultiplatform-koin/
+- network response
+    - handle java exceptions on android platform
