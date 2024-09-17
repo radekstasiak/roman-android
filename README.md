@@ -1,6 +1,6 @@
 
 # roman-android  
-The goal of this app is to help user remember to stay romantic in their relationship as it can be easily forgotten in the midst of the daily mundane routine. At the moment Im using this concept as a playground to familiarise myself with the Compose framework  
+Simple app concept used as a playground to familiarise myself with the Compose framework  
 
 ## current functionality
 - standard app structure with navigation, build using `Compose` framework
